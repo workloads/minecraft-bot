@@ -1,0 +1,48 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+
+      - name: Install
+        run: |
+          npm install --ignore-scripts
+
+      - name: Build TS
+        run: |
+          npm run build
+
+      - name: Prepare config
+        run: |
+          npm run copy:config
+
+      - name: Run Tests
+        run: |
+          npm run test:ci
+
+  automerge:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: write
+    steps:
+      - uses: fastify/github-action-merge-dependabot@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
