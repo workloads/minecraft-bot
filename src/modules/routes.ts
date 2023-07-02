@@ -3,6 +3,7 @@ import type http from 'http'
 import type { FastifyBaseLogger, RouteOptions } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 
+import { getEnvRoutes } from './env/envRoutes'
 import { getUserRoutes } from './users'
 
 export type Routes = Array<
@@ -25,8 +26,9 @@ export function getRoutes(): {
   routes: Routes
 } {
   const { routes: userRoutes } = getUserRoutes()
+  const { routes: envRoutes } = getEnvRoutes()
 
   return {
-    routes: [...userRoutes],
+    routes: [...userRoutes, ...envRoutes],
   }
 }
