@@ -1,12 +1,11 @@
 {
   "name": "@workloads/minecraft-bot",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A Mineflayer-based Excavation Assistant",
   "keywords": [
     "minecraft-bot",
     "mineflayer",
-    "mineflayer-bot",
-    "opentelemetry"
+    "mineflayer-bot"
   ],
   "homepage": "https://github.com/workloads/minecraft-bot#readme",
   "bugs": {
@@ -27,7 +26,7 @@
       "url": "https://github.com/LetsChill"
     }
   ],
-  "main": "main.js",
+  "main": "dist/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/workloads/minecraft-bot.git"
@@ -35,7 +34,7 @@
   "scripts": {
     "build": "tsc",
     "lint": "eslint . --ext .ts",
-    "lint:fix": "eslint .  --ext .ts --fix",
+    "lint:fix": "eslint . --ext .ts --fix",
     "format": "prettier --write ."
   },
   "dependencies": {

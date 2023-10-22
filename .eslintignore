@@ -1,6 +1,4 @@
-node_modules/
-coverage/
 dist/
-test/dotenvConfig.ts
+node_modules/
 test/
 vitest.config.ts
