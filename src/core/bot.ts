@@ -65,7 +65,7 @@ class MineflayerBot {
     return {
       isMining: false,
       stopMining: false,
-      block: undefined,
+      block: undefined
     };
   }
 
@@ -129,6 +129,7 @@ class MineflayerBot {
       password: credentials.password,
       version: credentials.version,
     });
+    inject(this.bot);
 
     this.discord = new Client({
       intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessageTyping],
@@ -152,9 +153,15 @@ class MineflayerBot {
 
     this.settings.miningChest.set(parseInt(chest[0]), parseInt(chest[1]), parseInt(chest[2]));
 
-    this.discord.login(this.settings.discordToken);
+    if (this.settings.discordToken === undefined) {
+      this.logger.info("Discord token is not present, Discord Integration is not activated.");
+      return;
+    }
 
-    inject(this.bot);
+    this.discord.login(this.settings.discordToken).catch(()=> {
+      this.logger.error("The discord token is invalid. Discord Integration is not activated.");
+      return;
+    });
   }
 
   public clearStates(): void {
