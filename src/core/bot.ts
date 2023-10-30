@@ -95,7 +95,7 @@ class MineflayerBot {
 
     const embed = new EmbedBuilder()
       .setTitle('Mineflayer-based Excavation Assistant')
-      .setColor(0x2f3136)
+      .setColor(0x2f3136) // translates to `#2f3136`
       .setThumbnail(`https://mc-heads.net/avatar/${username}`)
       .setAuthor({
         iconURL: `https://mc-heads.net/avatar/${this.bot.username}`,
