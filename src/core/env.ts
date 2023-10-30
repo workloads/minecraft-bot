@@ -1,6 +1,6 @@
-import { configDotenv } from "dotenv";
-import { MineflayerBot } from "./bot";
-import chalk from "chalk";
+import { configDotenv } from 'dotenv'
+import { MineflayerBot } from './bot'
+import chalk from 'chalk'
 
 interface ServerConfig {
   host: string
@@ -8,12 +8,12 @@ interface ServerConfig {
   username: string
   version: string
   password: string | undefined
-  auth: "microsoft" | "mojang" | "offline"
+  auth: 'microsoft' | 'mojang' | 'offline'
 }
 
 class ConfigManager {
   readConfig(instance: MineflayerBot): ServerConfig | undefined {
-    configDotenv();
+    configDotenv()
 
     if (
       !process.env.SERVER_PORT ||
@@ -25,8 +25,8 @@ class ConfigManager {
         chalk.redBright(
           "Error reading process environmental variables. Please check the '.env' file.",
         ),
-      );
-      return undefined;
+      )
+      return undefined
     }
 
     return {
@@ -35,9 +35,9 @@ class ConfigManager {
       username: process.env.BOT_NAME,
       version: process.env.SERVER_VERSION,
       password: process.env.BOT_PASS ? process.env.BOT_PASS : undefined,
-      auth: process.env.BOT_PASS ? "mojang" : "offline",
-    };
+      auth: process.env.BOT_PASS ? 'mojang' : 'offline',
+    }
   }
 }
 
-export { ConfigManager };
+export { ConfigManager }

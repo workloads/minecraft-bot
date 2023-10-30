@@ -1,4 +1,4 @@
-import type { Vec3 } from "vec3";
+import type { Vec3 } from 'vec3'
 
 interface BotStates {
   isMining: boolean
@@ -13,7 +13,7 @@ interface BotSettings {
   viewPort: number | undefined
   interfacePort: number | undefined
 
-  hungerPriority: "saturation" | "foodPoints"
+  hungerPriority: 'saturation' | 'foodPoints'
   hungerLimit: number
   hungerBannedFood: string[]
 
@@ -29,4 +29,4 @@ interface BotSettings {
   mappedBlocks: string[] | string
 }
 
-export { BotStates, BotSettings };
+export { BotStates, BotSettings }

@@ -1,51 +1,51 @@
-import mineflayer, { BotEvents } from "mineflayer";
-import { instance } from "../../index";
-import { Mining } from "../../utils/mining";
+import mineflayer, { BotEvents } from 'mineflayer'
+import { instance } from '../../index'
+import { Mining } from '../../utils/mining'
 
 /**
  * @param {mineflayer.Bot} bot
  */
 
 module.exports = (bot: mineflayer.Bot) => {
-  bot.addChatPattern("sleep", new RegExp(`<(.*)> ${instance.getSettings().commandsPrefix}sleep`), {
+  bot.addChatPattern('sleep', new RegExp(`<(.*)> ${instance.getSettings().commandsPrefix}sleep`), {
     repeat: true,
     parse: true,
-  });
+  })
 
   bot.addChatPattern(
-    "wake",
+    'wake',
     new RegExp(`<(.*)> ${instance.getSettings().commandsPrefix}(wake|wake up)`),
     { repeat: true, parse: true },
-  );
+  )
 
-  bot.on("chat:sleep" as keyof BotEvents, async ([[username]]: string) => {
-    if (!instance.getSettings().commandsEnabled) return;
+  bot.on('chat:sleep' as keyof BotEvents, async ([[username]]: string) => {
+    if (!instance.getSettings().commandsEnabled) return
 
     if (instance.getSettings().operators.includes(username)) {
-      instance.reportToDiscord(username, "sleep");
+      instance.reportToDiscord(username, 'sleep')
 
       if (instance.getStates().isMining) {
-        instance.getStates().stopMining = true;
-        await bot.waitForTicks(20);
+        instance.getStates().stopMining = true
+        await bot.waitForTicks(20)
       }
 
-      instance.goSleep();
+      instance.goSleep()
     }
-  });
+  })
 
-  bot.on("chat:wake" as keyof BotEvents, ([[username]]: string) => {
-    if (!instance.getSettings().commandsEnabled) return;
+  bot.on('chat:wake' as keyof BotEvents, ([[username]]: string) => {
+    if (!instance.getSettings().commandsEnabled) return
 
     if (instance.getSettings().operators.includes(username)) {
       if (bot.isSleeping) {
-        bot.wake();
+        bot.wake()
       }
     }
-  });
+  })
 
-  bot.on("wake", async () => {
+  bot.on('wake', async () => {
     if (instance.getStates().isMining) {
-      await Mining(instance);
+      await Mining(instance)
     }
-  });
-};
+  })
+}
