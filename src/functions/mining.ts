@@ -9,12 +9,12 @@ async function Mining(instance: MineflayerBot): Promise<void> {
   if (instance.getStates().stopMining) {
     instance.getStates().stopMining = false
 
-    instance.logger.info('Stopped the mining process.')
+    instance.logger.info(instance.strings.msg_miner_stopped)
     return
   }
 
   if (bot.inventory.emptySlotCount() <= 1) {
-    instance.logger.info('inventory full, depositing.')
+    instance.logger.info(instance.strings.msg_miner_deposit_start)
 
     await deposit(instance, true)
     return
@@ -24,7 +24,7 @@ async function Mining(instance: MineflayerBot): Promise<void> {
 
   if (!desired) {
     instance.logger.info(
-      'Could not find anymore of %s, depositing all blocks,',
+      instance.strings.msg_finder_block_failure,
       instance.getStates().block?.replace('_', ' '),
     )
     instance.getStates().isMining = false
@@ -80,14 +80,14 @@ async function deposit(instance: MineflayerBot, retry = false): Promise<void> {
 
         openChest.close()
 
-        instance.logger.info('deposited all blocks!')
+        instance.logger.info(instance.strings.msg_miner_deposit_start)
 
         if (retry) {
           await Mining(instance)
         }
       } else {
         instance.logger.error(
-          chalk.redBright('Could not find the chest mentioned in the environmental variable.'),
+          chalk.redBright(instance.strings.msg_finder_chest_failure),
         )
       }
     }

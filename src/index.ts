@@ -5,6 +5,8 @@ import { Movements, pathfinder } from 'mineflayer-pathfinder'
 import { plugin as autoEat } from 'mineflayer-auto-eat'
 import { plugin as tool } from 'mineflayer-tool'
 import Fastify, { FastifyInstance } from 'fastify'
+import { configDotenv } from 'dotenv'
+configDotenv()
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const inventoryView = require('mineflayer-web-inventory')
@@ -14,13 +16,15 @@ function createBot(): {
   bot: mineflayer.Bot
   fastify: FastifyInstance
 } {
-  const instance = new MineflayerBot()
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const strings = require(`../locales/${[process.env.BOT_LANG]}.json`)
+  const instance = new MineflayerBot(strings)
   const bot = instance.getBot()
   const fastify = Fastify()
 
   inventoryView(bot, { port: instance.getSettings().inventoryPort, log: false })
   instance.logger.info(
-    'Inventory viewer is up and listening to port: %d',
+    strings.msg_interface_inventory_success,
     instance.getSettings().inventoryPort,
   )
 
@@ -44,7 +48,7 @@ bot.once('spawn', async () => {
   bot.pathfinder.movements.allowParkour = false
   bot.pathfinder.movements.canDig = false
 
-  instance.logger.info(`Plugins has been configured. Currently at ${bot.entity.position.floor()}`)
+  instance.logger.info(instance.strings.msg_plugins_failure)
 })
 
 bot.on('death', async () => {

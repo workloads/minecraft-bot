@@ -1,6 +1,6 @@
 import mineflayer, { BotEvents } from 'mineflayer'
 import { instance } from '../../index'
-import { createRaw } from '../../utils/message'
+import { createRaw } from '../../functions/message'
 
 /**
  * @param {mineflayer.Bot} bot

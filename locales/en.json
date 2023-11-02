@@ -1,0 +1,65 @@
+{
+    "msg_greetings": "Hello World.",
+
+    "msg_api_received": "Received a message using the API.",
+    "msg_api_success": "The API has been configured. Running on %s",
+    "msg_api_failure": "",
+    "msg_api_sent": "The command was sent successfully.",
+
+    "msg_discord_failure": "Discord token is not present, Discord Integration is not activated.",
+    "msg_discord_success": "The discord integration was successfully configured.",
+
+    "msg_discord_token_not_present": "The discord token is not present. Discord Integration is not activated",
+    "msg_discord_token_failure": "The discord token is invalid. Discord Integration is not activated.",
+    "msg_discord_token_success": "The discord token is valid, commencing login process.",
+
+    "msg_discord_request_channel_id": "Please insert the discord channel in .env file.",
+    "msg_discord_channel_success": "The discord channel has been successfully cached.",
+
+    "msg_env_failure": "The env reader has failed, please check the .env file.",
+    "msg_env_success": "The env reader has successfully loaded variables.",
+
+    "msg_finder_block_success": "The finder process cannot find the block %s",
+    "msg_finder_block_failure": "The finder process cannot find anymore of %s, commencing deposit process.",
+
+    "msg_finder_chest_success": "The chest has been successfully spotted.",
+    "msg_finder_chest_failure": "Could not find the chest mentioned in the environmental variable.",
+
+    "msg_finder_player_success": "The player %s has been spotted.",
+    "msg_finder_player_failure": "The bot cannot find you, please check the render distance.",
+
+    "msg_finder_bed_success": "The finder process was able to find a bed.",
+    "msg_finder_bed_failure": "The finder process was unable to find a bed.",
+
+    "msg_miner_start_success": "The mining process has been successfully started.",
+    "msg_miner_start_failure": "The mining process had an unexpected error.",
+
+    "msg_miner_stopped": "The mining process has been stopped.",
+    "msg_miner_deposit_start": "The deposit process has started.",
+
+    "msg_miner_deposit_success": "The deposit process was successful.",
+    "msg_miner_deposit_failure": "The deposit process has failed ",
+
+    "msg_miner_already_started": "The mining process has already been started.",
+
+    "msg_interface_inventory_success": "Web Inventory Viewer has started successfully.",
+    "msg_interface_inventory_failure": "Web Inventory Viewer has failed unexpectedly.",
+    
+    "msg_plugins_success": "The plugin loader has failed unexpectedly.",
+    "msg_plugins_failure": "The plugin loader has successfully loaded plugins.",
+
+    "msg_command_failure": "The command %s has failed unexpectedly.",
+    "msg_command_success": "The command %s was successful.",
+    
+    "msg_command_unauthorized": "The bot has denied a command from an unauthorized user.",
+    "msg_command_blacklisted": "The bot has denied a command from a blacklisted user.",
+
+    "msg_sleeper_commence": "The bot has started the sleeping process.",
+    
+    "msg_sleeper_failure": "The bot was unable to sleep.",
+    "msg_sleeper_success": "The bot has successfully slept.",
+
+    "msg_sleeper_day": "The bot cannot sleep at day.",
+    "msg_sleeper_monsters": "The bot cannot sleep while monsters are nearby.",
+    "msg_sleeper_sleeping": "The bot is already sleeping."
+}

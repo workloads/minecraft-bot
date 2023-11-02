@@ -23,7 +23,7 @@ class ConfigManager {
     ) {
       instance.logger.error(
         chalk.redBright(
-          "Error reading process environmental variables. Please check the '.env' file.",
+          instance.strings.msg_env_failure,
         ),
       )
       return undefined

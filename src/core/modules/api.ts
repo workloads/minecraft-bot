@@ -24,7 +24,7 @@ module.exports = (bot: mineflayer.Bot) => {
       }>,
       rep,
     ) {
-      instance.logger.info('Received API call')
+      instance.logger.info(instance.strings.msg_api_received)
 
       const command = req.query.type
 
@@ -33,7 +33,7 @@ module.exports = (bot: mineflayer.Bot) => {
           rep.send({
             statusCode: 'failed',
             code: 1,
-            message: 'the bot is already in the process of mining.',
+            message: instance.strings.msg_miner_already_started,
           })
           return
         }
@@ -50,7 +50,7 @@ module.exports = (bot: mineflayer.Bot) => {
       ]
       bot.emit(`chat:${command}`, options)
       instance.reportToDiscord('Console', command)
-      rep.send({ statusCode: 'success', code: 0, message: 'The command was sent successfully.' })
+      rep.send({ statusCode: 'success', code: 0, message: instance.strings.msg_api_sent })
     },
   )
 
@@ -74,6 +74,6 @@ module.exports = (bot: mineflayer.Bot) => {
       console.error(err)
       process.exit(1)
     }
-    instance.logger.info(`Web Interface is up and listening to port: ${address}`)
+    instance.logger.info(instance.strings.msg_api_success, address)
   })
 }

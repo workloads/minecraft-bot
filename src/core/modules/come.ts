@@ -1,7 +1,6 @@
 import mineflayer, { BotEvents } from 'mineflayer'
 import { instance } from '../../index'
 import { goals } from 'mineflayer-pathfinder'
-
 /**
  * @param {mineflayer.Bot} bot
  */
@@ -22,7 +21,7 @@ module.exports = (bot: mineflayer.Bot) => {
     const player = bot.players[username]
 
     if (!player) {
-      instance.logger.error('The bot cannot see you, please check your render distance.')
+      instance.logger.error(instance.strings.msg_finder_player_failure)
       return
     }
 

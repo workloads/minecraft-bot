@@ -1,12 +1,12 @@
 import mineflayer, { Bot } from 'mineflayer'
-import { BotSettings, BotStates } from 'src/utils/interfaces'
+import { BotSettings, BotStates, Strings } from 'src/functions/interfaces'
 import { ConfigManager } from './env'
 import path from 'path'
 import fs from 'fs'
-import { FindBed, findDesiredBlock } from '../utils/findTools'
+import { FindBed, findDesiredBlock } from '../functions/findTools'
 import { goals } from 'mineflayer-pathfinder'
 import { Vec3 } from 'vec3'
-import { Mining } from '../utils/mining'
+import { Mining } from '../functions/mining'
 import { configDotenv } from 'dotenv'
 import { Channel, Client, GatewayIntentBits, EmbedBuilder } from 'discord.js'
 import pino from 'pino'
@@ -33,6 +33,7 @@ class MineflayerBot {
   public logger
   private discord: Client
   public channel: Channel | undefined
+  public strings: Strings
 
   private createSettings(): BotSettings {
     return {
@@ -112,7 +113,7 @@ class MineflayerBot {
     await this.channel.send({ embeds: [embed] })
   }
 
-  constructor() {
+  constructor(strings: Strings) {
     this.channel = undefined
     this.logger = pino(
       pretty({
@@ -140,13 +141,15 @@ class MineflayerBot {
     })
     inject(this.bot)
 
+    this.strings = strings
+
     this.discord = new Client({
       intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessageTyping],
     })
     this.discord.on('shardReady', () => {
-      this.logger.info('Discord Interface is up and listening to commands.')
+      this.logger.info(strings.msg_discord_success)
       if (!this.settings.discordChannel) {
-        this.logger.error('Please insert the discord channel in .env file.')
+        this.logger.error(strings.msg_discord_request_channel_id)
         process.exit(0)
       }
 
@@ -163,12 +166,12 @@ class MineflayerBot {
     this.settings.miningChest.set(parseInt(chest[0]), parseInt(chest[1]), parseInt(chest[2]))
 
     if (this.settings.discordToken === undefined) {
-      this.logger.info('Discord token is not present, Discord Integration is not activated.')
+      this.logger.info(strings.msg_discord_token_not_present)
       return
     }
 
     this.discord.login(this.settings.discordToken).catch(() => {
-      this.logger.error('The discord token is invalid. Discord Integration is not activated.')
+      this.logger.error(strings.msg_discord_token_failure)
       return
     })
   }
@@ -198,7 +201,7 @@ class MineflayerBot {
     const mcData = require('minecraft-data')(this.bot.version)
 
     if (this.states.isMining) {
-      this.logger.info('The bot is already mining.')
+      this.logger.info(this.strings.msg_miner_already_started)
       return
     }
 
@@ -207,7 +210,7 @@ class MineflayerBot {
     }
 
     if (!mcData.blocksByName[block]) {
-      this.logger.info(`Could not find the block ${block} on the registry.`)
+      this.logger.info(this.strings.msg_finder_block_success, block)
       return
     }
 
@@ -216,11 +219,11 @@ class MineflayerBot {
     const desired = await findDesiredBlock(this)
 
     if (!desired) {
-      this.logger.info('Could not find the block %s nearby', this.getStates().block)
+      this.logger.info(this.strings.msg_finder_block_success, this.getStates().block)
       return
     }
 
-    this.logger.info('Starting to mine: %s', desired.name.replaceAll('_', ' '))
+    this.logger.info(this.strings.msg_miner_start_success)
 
     this.states.isMining = true
 
@@ -231,14 +234,14 @@ class MineflayerBot {
 
   public goSleep(): void {
     if (this.bot.time.isDay) {
-      this.logger.info('cannot sleep at day')
+      this.logger.info(this.strings.msg_sleeper_day)
       return
     }
 
     const bed = FindBed(this)
 
     if (!bed) {
-      this.logger.info('cannot find a bed')
+      this.logger.info(this.strings.msg_finder_bed_failure)
       return
     }
 
@@ -251,7 +254,7 @@ class MineflayerBot {
     this.bot.once('goal_reached', async () => {
       this.bot.sleep(bed).catch((reason) => {
         if (reason.message.includes('monsters nearby')) {
-          this.logger.info('Monsters nearby!')
+          this.logger.info(this.strings.msg_sleeper_monsters)
         }
       })
     })
