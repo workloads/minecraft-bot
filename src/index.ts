@@ -17,7 +17,7 @@ function createBot(): {
   instance: MineflayerBot
   bot: mineflayer.Bot
   fastify: FastifyInstance
-} { 
+} {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const strings = require(`../locales/${[process.env.BOT_LANG]}.json`)
   const instance = new MineflayerBot(strings)
