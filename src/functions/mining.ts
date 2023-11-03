@@ -1,7 +1,6 @@
-import { goals } from 'mineflayer-pathfinder'
 import { findDesiredBlock } from './findTools'
+import { goals } from 'mineflayer-pathfinder'
 import { MineflayerBot } from 'src/core/bot'
-import chalk from 'chalk'
 
 async function Mining(instance: MineflayerBot): Promise<void> {
   const bot = instance.getBot()
@@ -39,7 +38,7 @@ async function Mining(instance: MineflayerBot): Promise<void> {
   bot.once('goal_reached', async () => {
     bot.dig(desired, true)
 
-    bot.once('diggingCompleted', async (block) => {
+    bot.once('diggingCompleted', async (block: { position: { x: number; z: number } }) => {
       bot.pathfinder.setGoal(
         new goals.GoalNear(block.position.x, bot.entity.position.y, block.position.z, 1),
       )
@@ -86,9 +85,7 @@ async function deposit(instance: MineflayerBot, retry = false): Promise<void> {
           await Mining(instance)
         }
       } else {
-        instance.logger.error(
-          chalk.redBright(instance.strings.msg_finder_chest_failure),
-        )
+        instance.logger.error(`\x1b[41m${instance.strings.msg_finder_chest_failure}\x1b[0m`)
       }
     }
   })

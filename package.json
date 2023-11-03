@@ -38,7 +38,6 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "chalk": "^5.3.0",
     "discord.js": "^14.13.0",
     "dotenv": "^16.3.0",
     "fastify": "^4.24.0",
@@ -46,7 +45,7 @@
     "mineflayer-auto-eat": "^3.3.0",
     "mineflayer-pathfinder": "^2.4.5",
     "mineflayer-tool": "^1.2.0",
-    "mineflayer-web-inventory": "^1.8.0",
+    "mineflayer-web-inventory": "^1.8.4",
     "pino": "^8.16.0",
     "pino-pretty": "^10.2.0"
   },

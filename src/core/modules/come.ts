@@ -1,6 +1,8 @@
 import mineflayer, { BotEvents } from 'mineflayer'
-import { instance } from '../../index'
+
 import { goals } from 'mineflayer-pathfinder'
+import { instance } from '../../index'
+
 /**
  * @param {mineflayer.Bot} bot
  */

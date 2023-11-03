@@ -1,6 +1,5 @@
 import { configDotenv } from 'dotenv'
 import { MineflayerBot } from './bot'
-import chalk from 'chalk'
 
 interface ServerConfig {
   host: string
@@ -21,11 +20,7 @@ class ConfigManager {
       !process.env.BOT_NAME ||
       !process.env.SERVER_VERSION
     ) {
-      instance.logger.error(
-        chalk.redBright(
-          instance.strings.msg_env_failure,
-        ),
-      )
+      instance.logger.error(`\x1b[41m${instance.strings.msg_env_failure}\x1b[0m`)
       return undefined
     }
 

@@ -1,4 +1,5 @@
 import mineflayer, { BotEvents } from 'mineflayer'
+
 import { instance } from '../../index'
 
 /**

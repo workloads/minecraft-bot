@@ -1,11 +1,13 @@
-import { MineflayerBot } from './core/bot'
-import mineflayer from 'mineflayer'
+import Fastify, { FastifyInstance } from 'fastify'
 
 import { Movements, pathfinder } from 'mineflayer-pathfinder'
 import { plugin as autoEat } from 'mineflayer-auto-eat'
 import { plugin as tool } from 'mineflayer-tool'
-import Fastify, { FastifyInstance } from 'fastify'
+import { MineflayerBot } from './core/bot'
 import { configDotenv } from 'dotenv'
+
+import mineflayer from 'mineflayer'
+
 configDotenv()
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -15,7 +17,7 @@ function createBot(): {
   instance: MineflayerBot
   bot: mineflayer.Bot
   fastify: FastifyInstance
-} {
+} { 
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const strings = require(`../locales/${[process.env.BOT_LANG]}.json`)
   const instance = new MineflayerBot(strings)
@@ -56,11 +58,11 @@ bot.on('death', async () => {
   instance.clearEvents()
 })
 
-bot.on('error', async (error) => {
+bot.on('error', async (error: unknown) => {
   console.error(error)
 })
 
-bot.on('kicked', async (reason) => {
+bot.on('kicked', async (reason: unknown) => {
   instance.logger.info(reason)
   process.exit(4)
 })

@@ -1,6 +1,7 @@
-import mineflayer from 'mineflayer'
 import { fastify, instance } from '../../index'
 import { FastifyRequest } from 'fastify'
+
+import mineflayer from 'mineflayer'
 
 /**
  * @param {mineflayer.Bot} bot

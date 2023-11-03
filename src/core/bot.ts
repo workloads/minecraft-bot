@@ -1,17 +1,19 @@
 import mineflayer, { Bot } from 'mineflayer'
+
+import { Channel, Client, GatewayIntentBits, EmbedBuilder } from 'discord.js'
 import { BotSettings, BotStates, Strings } from 'src/functions/interfaces'
-import { ConfigManager } from './env'
-import path from 'path'
-import fs from 'fs'
 import { FindBed, findDesiredBlock } from '../functions/findTools'
 import { goals } from 'mineflayer-pathfinder'
-import { Vec3 } from 'vec3'
 import { Mining } from '../functions/mining'
+import { ConfigManager } from './env'
 import { configDotenv } from 'dotenv'
-import { Channel, Client, GatewayIntentBits, EmbedBuilder } from 'discord.js'
-import pino from 'pino'
+import { Vec3 } from 'vec3'
+
 import pretty from 'pino-pretty'
-import chalk from 'chalk'
+import path from 'path'
+import pino from 'pino'
+import fs from 'fs'
+
 configDotenv()
 
 const env = process.env
@@ -119,8 +121,8 @@ class MineflayerBot {
       pretty({
         colorize: true,
         customPrettifiers: {
-          time: (timestamp) => chalk.blueBright(`${timestamp}`),
-          pid: () => chalk.cyanBright(`${process.env.BOT_NAME}`),
+          time: (timestamp) => `\x1b[34m${timestamp}\x1b[0m`,
+          pid: () => `\x1b[36m${process.env.BOT_NAME}\x1b[0m`,
         },
         levelFirst: true,
       }),
