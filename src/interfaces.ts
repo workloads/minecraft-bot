@@ -6,6 +6,11 @@ interface BotStates {
   block: string | undefined
 }
 
+interface Args {
+  username: string,
+  argument: string | undefined
+}
+
 interface BotSettings {
   discordToken: string | undefined
   discordChannel: string | undefined
@@ -75,4 +80,4 @@ interface Strings {
   msg_sleeper_sleeping: string
 }
 
-export { BotStates, BotSettings, Strings }
+export { BotStates, BotSettings, Strings, Args }

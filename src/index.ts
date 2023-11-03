@@ -1,5 +1,3 @@
-import Fastify, { FastifyInstance } from 'fastify'
-
 import { Movements, pathfinder } from 'mineflayer-pathfinder'
 import { plugin as autoEat } from 'mineflayer-auto-eat'
 import { plugin as tool } from 'mineflayer-tool'
@@ -16,13 +14,11 @@ const inventoryView = require('mineflayer-web-inventory')
 function createBot(): {
   instance: MineflayerBot
   bot: mineflayer.Bot
-  fastify: FastifyInstance
 } {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const strings = require(`../locales/${[process.env.BOT_LANG]}.json`)
   const instance = new MineflayerBot(strings)
   const bot = instance.getBot()
-  const fastify = Fastify()
 
   inventoryView(bot, { port: instance.getSettings().inventoryPort, log: false })
   instance.logger.info(
@@ -30,10 +26,10 @@ function createBot(): {
     instance.getSettings().inventoryPort,
   )
 
-  return { instance, bot, fastify }
+  return { instance, bot }
 }
 
-export const { instance, bot, fastify } = createBot()
+export const { instance, bot } = createBot()
 
 bot.loadPlugin(pathfinder)
 bot.loadPlugin(autoEat)
@@ -50,7 +46,7 @@ bot.once('spawn', async () => {
   bot.pathfinder.movements.allowParkour = false
   bot.pathfinder.movements.canDig = false
 
-  instance.logger.info(instance.strings.msg_plugins_failure)
+  instance.logger.info(instance.strings.msg_plugins_success)
 })
 
 bot.on('death', async () => {
@@ -62,7 +58,7 @@ bot.on('error', async (error: unknown) => {
   console.error(error)
 })
 
-bot.on('kicked', async (reason: unknown) => {
-  instance.logger.info(reason)
+bot.on('kicked', async (reason: string) => {
+  instance.log(reason)
   process.exit(4)
 })

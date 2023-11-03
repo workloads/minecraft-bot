@@ -1,32 +1,20 @@
 import mineflayer, { Bot } from 'mineflayer'
 
 import { Channel, Client, GatewayIntentBits, EmbedBuilder } from 'discord.js'
-import { BotSettings, BotStates, Strings } from 'src/functions/interfaces'
-import { FindBed, findDesiredBlock } from '../functions/finder'
-import { goals } from 'mineflayer-pathfinder'
-import { Mining } from '../functions/mining'
+import { BotSettings, BotStates, Strings } from '../interfaces'
 import { ConfigManager } from './env'
 import { configDotenv } from 'dotenv'
 import { Vec3 } from 'vec3'
 
 import pretty from 'pino-pretty'
-import path from 'path'
+import { Api } from './api'
 import pino from 'pino'
-import fs from 'fs'
+
+import { command_handler } from './handler'
 
 configDotenv()
 
 const env = process.env
-
-function inject(bot: mineflayer.Bot) {
-  const COMMANDS_DIRECTORY = path.join(__dirname, 'modules')
-  const commands = fs
-    .readdirSync(COMMANDS_DIRECTORY)
-    .filter((x) => x.endsWith('.js'))
-    .map((pluginName) => require(path.join(COMMANDS_DIRECTORY, pluginName)))
-
-  bot.loadPlugins(commands)
-}
 
 class MineflayerBot {
   private bot: Bot
@@ -36,6 +24,7 @@ class MineflayerBot {
   private discord: Client
   public channel: Channel | undefined
   public strings: Strings
+  public api: Api
 
   private createSettings(): BotSettings {
     return {
@@ -141,8 +130,6 @@ class MineflayerBot {
       password: credentials.password,
       version: credentials.version,
     })
-    inject(this.bot)
-
     this.strings = strings
 
     this.discord = new Client({
@@ -166,6 +153,9 @@ class MineflayerBot {
     this.states = this.createStates()
 
     this.settings.miningChest.set(parseInt(chest[0]), parseInt(chest[1]), parseInt(chest[2]))
+
+    this.bot.loadPlugin(command_handler)
+    this.api = new Api(this)
 
     if (this.settings.discordToken === undefined) {
       this.logger.info(strings.msg_discord_token_not_present)
@@ -194,72 +184,8 @@ class MineflayerBot {
     this.bot.removeAllListeners('playerCollect')
   }
 
-  public async goMine(block: string | undefined): Promise<void> {
-    if (!block) return
-
-    block = block.toLowerCase().replaceAll(' ', '_')
-
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const mcData = require('minecraft-data')(this.bot.version)
-
-    if (this.states.isMining) {
-      this.logger.info(this.strings.msg_miner_already_started)
-      return
-    }
-
-    if (this.getSettings().mappedBlocks.includes(block)) {
-      block = block + '_block'
-    }
-
-    if (!mcData.blocksByName[block]) {
-      this.logger.info(this.strings.msg_finder_block_success, block)
-      return
-    }
-
-    this.getStates().block = block.toLowerCase().replaceAll(' ', '_')
-
-    const desired = await findDesiredBlock(this)
-
-    if (!desired) {
-      this.logger.info(this.strings.msg_finder_block_success, this.getStates().block)
-      return
-    }
-
-    this.logger.info(this.strings.msg_miner_start_success)
-
-    this.states.isMining = true
-
-    await this.bot.tool.equipForBlock(desired)
-
-    Mining(this)
-  }
-
-  public goSleep(): void {
-    if (this.bot.time.isDay) {
-      this.logger.info(this.strings.msg_sleeper_day)
-      return
-    }
-
-    const bed = FindBed(this)
-
-    if (!bed) {
-      this.logger.info(this.strings.msg_finder_bed_failure)
-      return
-    }
-
-    this.bot.pathfinder.setGoal(null)
-
-    const bed_goal = new goals.GoalGetToBlock(bed.position.x, bed.position.y, bed.position.z)
-
-    this.bot.pathfinder.setGoal(bed_goal)
-
-    this.bot.once('goal_reached', async () => {
-      this.bot.sleep(bed).catch((reason) => {
-        if (reason.message.includes('monsters nearby')) {
-          this.logger.info(this.strings.msg_sleeper_monsters)
-        }
-      })
-    })
+  public log(message: string) {
+    this.logger.info(message)
   }
 }
 

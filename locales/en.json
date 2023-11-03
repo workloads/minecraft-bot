@@ -45,8 +45,8 @@
   "msg_interface_inventory_success": "Web Inventory Viewer has started successfully.",
   "msg_interface_inventory_failure": "Web Inventory Viewer has failed unexpectedly.",
 
-  "msg_plugins_success": "The plugin loader has failed unexpectedly.",
-  "msg_plugins_failure": "The plugin loader has successfully loaded plugins.",
+  "msg_plugins_failure": "The plugin loader has failed unexpectedly.",
+  "msg_plugins_success": "The plugin loader has successfully loaded plugins.",
 
   "msg_command_failure": "The command %s has failed unexpectedly.",
   "msg_command_success": "The command %s was successful.",
