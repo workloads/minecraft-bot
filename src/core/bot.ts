@@ -2,7 +2,7 @@ import mineflayer, { Bot } from 'mineflayer'
 
 import { Channel, Client, GatewayIntentBits, EmbedBuilder } from 'discord.js'
 import { BotSettings, BotStates, Strings } from 'src/functions/interfaces'
-import { FindBed, findDesiredBlock } from '../functions/findTools'
+import { FindBed, findDesiredBlock } from '../functions/finder'
 import { goals } from 'mineflayer-pathfinder'
 import { Mining } from '../functions/mining'
 import { ConfigManager } from './env'
@@ -98,7 +98,7 @@ class MineflayerBot {
 
     const embed = new EmbedBuilder()
       .setTitle('Mineflayer-based Excavation Assistant')
-      .setColor(0x2f3136) // translates to `#2f3136`
+      .setColor(`#${env.DISCORD_EMBED_COLOR}`) // translates to `#2f3136`
       .setThumbnail(`https://mc-heads.net/avatar/${username}`)
       .setAuthor({
         iconURL: `https://mc-heads.net/avatar/${this.bot.username}`,

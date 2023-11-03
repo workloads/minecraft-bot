@@ -1,4 +1,4 @@
-import { findDesiredBlock } from './findTools'
+import { findDesiredBlock } from './finder'
 import { goals } from 'mineflayer-pathfinder'
 import { MineflayerBot } from 'src/core/bot'
 
