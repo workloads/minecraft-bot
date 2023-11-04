@@ -8,3 +8,4 @@ node_modules/
 pids
 .env
 .vscode
+package-lock.json

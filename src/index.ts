@@ -5,7 +5,6 @@ import { MineflayerBot } from './core/bot'
 import { configDotenv } from 'dotenv'
 
 import mineflayer from 'mineflayer'
-
 configDotenv()
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
