@@ -1,5 +1,6 @@
 import mineflayer from 'mineflayer'
 import { instance } from '../index'
+
 import { sleep, wake } from '../commands/rest'
 import { attempt_mining, stop_mining } from '../commands/excavation'
 import { MineflayerBot } from './bot'
@@ -7,18 +8,14 @@ import { go_to_player } from '../commands/travel'
 import { Args } from '../interfaces'
 import { halt, status_request } from '../commands/health'
 
-/**
- * @param {mineflayer.Bot} bot
- */
-
-const commands: {[key in string]: (instance: MineflayerBot, argument: Args) => Promise<void>} = {
+const commands: { [key in string]: (instance: MineflayerBot, argument: Args) => Promise<void> } = {
   sleep: sleep,
   wake: wake,
   mine: attempt_mining,
   stop: stop_mining,
   come: go_to_player,
   status: status_request,
-  quit: halt
+  quit: halt,
 }
 
 function command_handler(bot: mineflayer.Bot) {
@@ -38,7 +35,7 @@ function command_handler(bot: mineflayer.Bot) {
     const command = match[1]
     // eslint-disable-next-line no-prototype-builtins
     if (!commands.hasOwnProperty(command)) {
-      instance.log(instance.strings.msg_command_failure)
+      instance.log.info(instance.locale.msg_command_failure)
       return
     }
 
@@ -47,11 +44,11 @@ function command_handler(bot: mineflayer.Bot) {
 
     const args: Args = {
       username: username,
-      argument: argument
+      argument: argument,
     }
 
     if (commanded === bot.username) {
-      instance.reportToDiscord(username, `${command} ${argument ? argument : ''}`)
+      instance.send_to_discord(username, `${command} ${argument ? argument : ''}`)
       commands[command](instance, args)
       return
     }
@@ -62,7 +59,7 @@ function command_handler(bot: mineflayer.Bot) {
     let count = 0
     for (const segment of parsed_commanded) {
       if (segment === '*') {
-        instance.reportToDiscord(username, `${command} ${argument ? argument : ''}`)
+        instance.send_to_discord(username, `${command} ${argument ? argument : ''}`)
         commands[command](instance, args)
         return
       }

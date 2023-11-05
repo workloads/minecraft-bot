@@ -7,13 +7,14 @@ interface BotStates {
 }
 
 interface Args {
-  username: string,
+  username: string
   argument: string | undefined
 }
 
 interface BotSettings {
   discordToken: string | undefined
   discordChannel: string | undefined
+  discordEmbedColor: string
   inventoryPort: number | undefined
   viewPort: number | undefined
   interfacePort: number | undefined
@@ -49,6 +50,8 @@ interface Strings {
   msg_discord_channel_success: string
   msg_env_failure: string
   msg_env_success: string
+  msg_credentials_success: string
+  msg_credentials_failure: string
   msg_finder_block_success: string
   msg_finder_block_failure: string
   msg_finder_chest_success: string
@@ -70,6 +73,7 @@ interface Strings {
   msg_plugins_failure: string
   msg_command_failure: string
   msg_command_success: string
+  msg_command_notfound: string
   msg_command_unauthorized: string
   msg_command_blacklisted: string
   msg_sleeper_commence: string
@@ -78,6 +82,12 @@ interface Strings {
   msg_sleeper_day: string
   msg_sleeper_monsters: string
   msg_sleeper_sleeping: string
+  embed_title: string
+  embed_author_text: string
+  embed_description_title: string
+  embed_description_self_label: string
+  embed_description_commander: string
+  embed_description_command: string
 }
 
 export { BotStates, BotSettings, Strings, Args }

@@ -1,5 +1,5 @@
 {
-  "msg_greetings": "Hello World.",
+  "msg_greetings": "The bot is loaded and ready for actions.",
 
   "msg_api_received": "Received a message using the API.",
   "msg_api_success": "The API has been configured. Running on %s",
@@ -18,6 +18,9 @@
 
   "msg_env_failure": "The env reader has failed, please check the .env file.",
   "msg_env_success": "The env reader has successfully loaded variables.",
+
+  "msg_credentials_success": "The credentials are valid. continuing.",
+  "msg_credentials_failure": "The credentials are invalid. Please insert valid credentials.",
 
   "msg_finder_block_success": "The finder process cannot find the block %s",
   "msg_finder_block_failure": "The finder process cannot find anymore of %s, commencing deposit process.",
@@ -50,6 +53,7 @@
 
   "msg_command_failure": "The command %s has failed unexpectedly.",
   "msg_command_success": "The command %s was successful.",
+  "msg_command_notfound": "The command %s was not found.",
 
   "msg_command_unauthorized": "The bot has denied a command from an unauthorized user.",
   "msg_command_blacklisted": "The bot has denied a command from a blacklisted user.",
@@ -61,5 +65,12 @@
 
   "msg_sleeper_day": "The bot cannot sleep at day.",
   "msg_sleeper_monsters": "The bot cannot sleep while monsters are nearby.",
-  "msg_sleeper_sleeping": "The bot is already sleeping."
+  "msg_sleeper_sleeping": "The bot is already sleeping.",
+
+  "embed_title": "Mineflayer-based Excavation Assistant",
+  "embed_author_text": "Command Report",
+  "embed_description_title": "Command has been issued.",
+  "embed_description_self_label": "Bot Username:",
+  "embed_description_commander": "Commander:",
+  "embed_description_command": "Command ran:"
 }

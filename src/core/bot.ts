@@ -18,18 +18,22 @@ const env = process.env
 
 class MineflayerBot {
   private bot: Bot
+  private discord: Client
+
   private settings: BotSettings
   private states: BotStates
-  public logger
-  private discord: Client
-  public channel: Channel | undefined
-  public strings: Strings
+
+  public log
+  public channel: Channel | undefined = undefined
+  public locale: Strings
   public api: Api
 
   private createSettings(): BotSettings {
     return {
       discordToken: env.DISCORD_TOKEN ? env.DISCORD_TOKEN : undefined,
       discordChannel: env.DISCORD_CHANNEL_ID ? env.DISCORD_CHANNEL_ID : undefined,
+      discordEmbedColor: env.DISCORD_EMBED_COLOR ? env.DISCORD_EMBED_COLOR : '2f3136',
+
       inventoryPort: env.BOT_WEB_INVENTORY_PORT ? parseInt(env.BOT_WEB_INVENTORY_PORT) : undefined,
       viewPort: env.BOT_WEB_VIEW_PORT ? parseInt(env.BOT_WEB_VIEW_PORT) : undefined,
       interfacePort: env.BOT_WEB_INTERFACE_PORT ? parseInt(env.BOT_WEB_INTERFACE_PORT) : undefined,
@@ -45,7 +49,7 @@ class MineflayerBot {
         : 18,
       miningChest: new Vec3(0, 0, 0),
 
-      operators: env.BOT_CHAT_OPERATOR_ALLOWLIST ? env.BOT_CHAT_OPERATOR_ALLOWLIST : [],
+      operators: env.BOT_CHAT_OPERATOR_ALLOWLIST ? env.BOT_CHAT_OPERATOR_ALLOWLIST.split(',') : [],
       commandsEnabled: env.BOT_CHAT_ALLOW_CHAT === 'true' ? true : false,
       commandsPrefix: env.BOT_CHAT_COMMAND_PREFIX ? env.BOT_CHAT_COMMAND_PREFIX : '#',
 
@@ -57,14 +61,14 @@ class MineflayerBot {
     return {
       isMining: false,
       stopMining: false,
-      block: undefined,
+      block: undefined
     }
   }
 
   public getBot(): Bot {
     return this.bot
   }
-  public getDiscordClient(): Client {
+  public getDiscordClient(): Client | undefined {
     return this.discord
   }
 
@@ -76,37 +80,14 @@ class MineflayerBot {
     return this.settings
   }
 
-  public async reportToDiscord(
-    username: string,
-    command: string,
-    params: string | null = null,
-  ): Promise<void> {
-    if (!this.channel) return
-
-    if (!this.channel.isTextBased()) return // This will never happen.
-
-    const embed = new EmbedBuilder()
-      .setTitle('Mineflayer-based Excavation Assistant')
-      .setColor(`#${env.DISCORD_EMBED_COLOR}`) // translates to `#2f3136`
-      .setThumbnail(`https://mc-heads.net/avatar/${username}`)
-      .setAuthor({
-        iconURL: `https://mc-heads.net/avatar/${this.bot.username}`,
-        name: 'Command Report',
-      })
-      .setTimestamp()
-
-    embed.setDescription(
-      `### Command has been issued.\n\`\`\`yml\n- Bot Username: ${
-        this.bot.username
-      }\n\n- Commander: ${username}\n\n- Command ran: ${command} ${params ? params : ''}\n\`\`\``,
-    )
-
-    await this.channel.send({ embeds: [embed] })
+  public clearEvents() {
+    this.bot.removeAllListeners('goal_reached')
+    this.bot.removeAllListeners('diggingCompleted')
+    this.bot.removeAllListeners('playerCollect')
   }
 
   constructor(strings: Strings) {
-    this.channel = undefined
-    this.logger = pino(
+    this.log = pino(
       pretty({
         colorize: true,
         customPrettifiers: {
@@ -117,8 +98,30 @@ class MineflayerBot {
       }),
     )
 
+    // General Configuration.
+    this.discord = new Client({
+      intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessageTyping],
+    })
+
+    this.locale = strings
+    this.settings = this.createSettings()
+    this.states = this.createStates()
+
+    const chest_location = env.BOT_MINING_CHEST_LOCATION
+      ? env.BOT_MINING_CHEST_LOCATION.split(',')
+      : ['0', '0', '0']
+    this.settings.miningChest.set(
+      parseInt(chest_location[0]),
+      parseInt(chest_location[1]),
+      parseInt(chest_location[2]),
+    )
+
+    this.api = new Api(this)
+
+    // Minecraft Bot Initializer.
     const credentials = new ConfigManager().readConfig(this)
     if (!credentials) {
+      this.log.info(strings.msg_credentials_failure)
       process.exit(4)
     }
 
@@ -130,40 +133,32 @@ class MineflayerBot {
       password: credentials.password,
       version: credentials.version,
     })
-    this.strings = strings
-
-    this.discord = new Client({
-      intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessageTyping],
-    })
-    this.discord.on('shardReady', () => {
-      this.logger.info(strings.msg_discord_success)
-      if (!this.settings.discordChannel) {
-        this.logger.error(strings.msg_discord_request_channel_id)
-        process.exit(0)
-      }
-
-      this.channel = this.discord.channels.cache.get(this.settings.discordChannel)
-    })
-
-    const chest = env.BOT_MINING_CHEST_LOCATION
-      ? env.BOT_MINING_CHEST_LOCATION.split(',')
-      : ['0', '0', '0']
-
-    this.settings = this.createSettings()
-    this.states = this.createStates()
-
-    this.settings.miningChest.set(parseInt(chest[0]), parseInt(chest[1]), parseInt(chest[2]))
 
     this.bot.loadPlugin(command_handler)
-    this.api = new Api(this)
 
+    // Discord Integration Initializer.
     if (this.settings.discordToken === undefined) {
-      this.logger.info(strings.msg_discord_token_not_present)
+      this.log.info(strings.msg_discord_token_not_present)
       return
     }
 
+    this.discord.on('shardReady', () => {
+      this.log.info(strings.msg_discord_success)
+
+      if (!this.settings.discordChannel) {
+        this.log.error(strings.msg_discord_request_channel_id)
+        return
+      }
+
+      if (this.settings.discordChannel) {
+        this.channel = this.discord.channels.cache.get(this.settings.discordChannel)
+      } else {
+        this.log.info(strings.msg_discord_request_channel_id)
+      }
+    })
+
     this.discord.login(this.settings.discordToken).catch(() => {
-      this.logger.error(strings.msg_discord_token_failure)
+      this.log.error(strings.msg_discord_token_failure)
       return
     })
   }
@@ -178,14 +173,38 @@ class MineflayerBot {
 
     this.settings.miningChest.set(parseInt(chest[0]), parseInt(chest[1]), parseInt(chest[2]))
   }
-  public clearEvents() {
-    this.bot.removeAllListeners('goal_reached')
-    this.bot.removeAllListeners('diggingCompleted')
-    this.bot.removeAllListeners('playerCollect')
-  }
 
-  public log(message: string) {
-    this.logger.info(message)
+  public async send_to_discord(
+    username: string,
+    command: string,
+    params: string | null = null,
+  ): Promise<void> {
+    if (!this.channel) return
+
+    if (!this.channel.isTextBased()) return // This will never happen.
+
+    const embed = new EmbedBuilder()
+      .setTitle(this.locale.embed_title)
+      .setColor(`#${env.DISCORD_EMBED_COLOR}`) // translates to `#2f3136`
+      .setThumbnail(`https://mc-heads.net/avatar/${username}`)
+      .setAuthor({
+        iconURL: `https://mc-heads.net/avatar/${this.bot.username}`,
+        name: this.locale.embed_author_text,
+      })
+      .setTimestamp()
+
+    embed.setDescription(
+      `### ${this.locale.embed_description_command}
+\`\`\`yml
+- ${this.locale.embed_description_self_label} ${this.bot.username}
+      
+- ${this.locale.embed_description_commander} ${username}
+      
+- ${this.locale.embed_description_command} ${command} ${params ? params : ''}
+\`\`\``,
+    )
+
+    await this.channel.send({ embeds: [embed] })
   }
 }
 

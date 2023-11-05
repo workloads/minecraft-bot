@@ -20,7 +20,7 @@ class ConfigManager {
       !process.env.BOT_NAME ||
       !process.env.SERVER_VERSION
     ) {
-      instance.logger.error(`\x1b[41m${instance.strings.msg_env_failure}\x1b[0m`)
+      instance.log.error(`\x1b[41m${instance.locale.msg_env_failure}\x1b[0m`)
       return undefined
     }
 

@@ -16,25 +16,23 @@ function createBot(): {
 } {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const strings = require(`../locales/${[process.env.BOT_LANG]}.json`)
+
   const instance = new MineflayerBot(strings)
   const bot = instance.getBot()
 
   inventoryView(bot, { port: instance.getSettings().inventoryPort, log: false })
-  instance.logger.info(
-    strings.msg_interface_inventory_success,
-    instance.getSettings().inventoryPort,
-  )
+  instance.log.info(strings.msg_interface_inventory_success, instance.getSettings().inventoryPort)
 
   return { instance, bot }
 }
 
 export const { instance, bot } = createBot()
 
-bot.loadPlugin(pathfinder)
-bot.loadPlugin(autoEat)
-bot.loadPlugin(tool)
-
 bot.once('spawn', async () => {
+  bot.loadPlugin(pathfinder)
+  bot.loadPlugin(autoEat)
+  bot.loadPlugin(tool)
+
   bot.autoEat.options.priority = instance.getSettings().hungerPriority
   bot.autoEat.options.startAt = instance.getSettings().hungerLimit
   bot.autoEat.options.bannedFood = instance.getSettings().hungerBannedFood
@@ -45,7 +43,7 @@ bot.once('spawn', async () => {
   bot.pathfinder.movements.allowParkour = false
   bot.pathfinder.movements.canDig = false
 
-  instance.logger.info(instance.strings.msg_plugins_success)
+  instance.log.info(instance.locale.msg_greetings)
 })
 
 bot.on('death', async () => {
@@ -58,6 +56,6 @@ bot.on('error', async (error: unknown) => {
 })
 
 bot.on('kicked', async (reason: string) => {
-  instance.log(reason)
+  instance.log.info(reason)
   process.exit(4)
 })
