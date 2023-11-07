@@ -48,6 +48,7 @@ interface Strings {
   msg_discord_token_success: string
   msg_discord_request_channel_id: string
   msg_discord_channel_success: string
+  msg_discord_channel_failure: string
   msg_env_failure: string
   msg_env_success: string
   msg_credentials_success: string

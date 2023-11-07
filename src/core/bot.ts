@@ -11,7 +11,6 @@ import { Api } from './api'
 import pino from 'pino'
 
 import { command_handler } from './handler'
-
 configDotenv()
 
 const env = process.env
@@ -203,8 +202,12 @@ class MineflayerBot {
 - ${this.locale.embed_description_command} ${command} ${params ? params : ''}
 \`\`\``,
     )
-
-    await this.channel.send({ embeds: [embed] })
+    
+    try {
+      await this.channel.send({ embeds: [embed] })
+    } catch (error) {
+      this.locale.msg_discord_channel_failure
+    }
   }
 }
 

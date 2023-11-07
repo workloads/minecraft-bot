@@ -15,6 +15,7 @@
 
   "msg_discord_request_channel_id": "Please insert the discord channel in .env file.",
   "msg_discord_channel_success": "The discord channel has been successfully cached.",
+  "msg_discord_channel_failure": "The discord channel is not working.",
 
   "msg_env_failure": "The env reader has failed, please check the .env file.",
   "msg_env_success": "The env reader has successfully loaded variables.",

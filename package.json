@@ -41,6 +41,7 @@
     "discord.js": "^14.13.0",
     "dotenv": "^16.3.0",
     "fastify": "^4.24.0",
+    "minecraft-assets": "^1.12.2",
     "mineflayer": "^4.14.0",
     "mineflayer-auto-eat": "^3.3.0",
     "mineflayer-pathfinder": "^2.4.5",

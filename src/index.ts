@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { Movements, pathfinder } from 'mineflayer-pathfinder'
 import { plugin as autoEat } from 'mineflayer-auto-eat'
 import { plugin as tool } from 'mineflayer-tool'
@@ -7,14 +8,12 @@ import { configDotenv } from 'dotenv'
 import mineflayer from 'mineflayer'
 configDotenv()
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const inventoryView = require('mineflayer-web-inventory')
 
 function createBot(): {
   instance: MineflayerBot
   bot: mineflayer.Bot
 } {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const strings = require(`../locales/${[process.env.BOT_LANG]}.json`)
 
   const instance = new MineflayerBot(strings)
