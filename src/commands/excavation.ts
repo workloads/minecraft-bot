@@ -1,8 +1,12 @@
 import { goals } from 'mineflayer-pathfinder'
 import { MineflayerBot } from '../core/bot'
+import MinecraftData from 'minecraft-data'
 import { Args } from '../interfaces'
 
 async function attempt_mining(instance: MineflayerBot, args: Args): Promise<void> {
+
+  if (instance.getStates().entity) return
+  
   let block = args.argument
 
   if (!block) return
@@ -10,7 +14,7 @@ async function attempt_mining(instance: MineflayerBot, args: Args): Promise<void
   block = block.toLowerCase().replaceAll(' ', '_')
 
   // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const mcData = require('minecraft-data')(instance.getBot().version)
+  const mcData = MinecraftData(instance.getBot().version)
 
   if (instance.getStates().isMining) {
     instance.log.info(instance.locale.msg_miner_already_started)
@@ -19,6 +23,10 @@ async function attempt_mining(instance: MineflayerBot, args: Args): Promise<void
 
   if (instance.getSettings().mappedBlocks.includes(block)) {
     block = block + '_block'
+  }
+
+  if (instance.getSettings().mappedLogs.includes(block)) {
+    block = block + '_log'
   }
 
   if (!mcData.blocksByName[block]) {
@@ -53,8 +61,9 @@ async function stop_mining(instance: MineflayerBot): Promise<void> {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function find_desired_block(instance: MineflayerBot): Promise<any> {
   return instance.getBot().findBlock({
-    matching: (b) => b.name === instance.getStates().block,
-    maxDistance: instance.getSettings().miningDistance
+    matching: (b) => b.name === instance.getStates().block && b.position.y - instance.getBot().entity.position.y < 6,
+    maxDistance: instance.getSettings().miningDistance,
+    useExtraInfo: true
   })
 }
 

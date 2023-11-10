@@ -7,12 +7,15 @@ import { MineflayerBot } from './bot'
 import { go_to_player } from '../commands/travel'
 import { Args } from '../interfaces'
 import { halt, status_request } from '../commands/health'
+import { attempt_murder, stop_murdering } from '../commands/murder'
 
 const commands: { [key in string]: (instance: MineflayerBot, argument: Args) => Promise<void> } = {
   sleep: sleep,
   wake: wake,
   mine: attempt_mining,
-  stop: stop_mining,
+  stop_mining: stop_mining,
+  stop_murdering: stop_murdering,
+  murder: attempt_murder,
   come: go_to_player,
   status: status_request,
   quit: halt,

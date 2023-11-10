@@ -3,7 +3,9 @@ import type { Vec3 } from 'vec3'
 interface BotStates {
   isMining: boolean
   stopMining: boolean
+  stopMurdering: boolean
   block: string | undefined
+  entity: string | undefined
 }
 
 interface Args {
@@ -33,6 +35,7 @@ interface BotSettings {
   commandsPrefix: string
 
   mappedBlocks: string[] | string
+  mappedLogs: string[] | string
 }
 
 interface Strings {

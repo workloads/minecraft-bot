@@ -2,6 +2,7 @@
 import { Movements, pathfinder } from 'mineflayer-pathfinder'
 import { plugin as autoEat } from 'mineflayer-auto-eat'
 import { plugin as tool } from 'mineflayer-tool'
+import { plugin as pvp } from 'mineflayer-pvp'
 import { MineflayerBot } from './core/bot'
 import { configDotenv } from 'dotenv'
 
@@ -31,6 +32,7 @@ bot.once('spawn', async () => {
   bot.loadPlugin(pathfinder)
   bot.loadPlugin(autoEat)
   bot.loadPlugin(tool)
+  bot.loadPlugin(pvp)
 
   bot.autoEat.options.priority = instance.getSettings().hungerPriority
   bot.autoEat.options.startAt = instance.getSettings().hungerLimit

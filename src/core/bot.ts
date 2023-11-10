@@ -53,6 +53,7 @@ class MineflayerBot {
       commandsPrefix: env.BOT_CHAT_COMMAND_PREFIX ? env.BOT_CHAT_COMMAND_PREFIX : '#',
 
       mappedBlocks: env.BOT_MAPPED_BLOCKS ? env.BOT_MAPPED_BLOCKS.split(',') : [],
+      mappedLogs: env.BOT_MAPPED_LOGS ? env.BOT_MAPPED_LOGS.split(',') : []
     }
   }
 
@@ -60,7 +61,9 @@ class MineflayerBot {
     return {
       isMining: false,
       stopMining: false,
-      block: undefined
+      stopMurdering: false,
+      block: undefined,
+      entity: undefined
     }
   }
 
@@ -83,6 +86,7 @@ class MineflayerBot {
     this.bot.removeAllListeners('goal_reached')
     this.bot.removeAllListeners('diggingCompleted')
     this.bot.removeAllListeners('playerCollect')
+    this.bot.removeAllListeners('entityDead')
   }
 
   constructor(strings: Strings) {
@@ -105,6 +109,8 @@ class MineflayerBot {
     this.locale = strings
     this.settings = this.createSettings()
     this.states = this.createStates()
+
+    console.log(this.settings.operators)
 
     const chest_location = env.BOT_MINING_CHEST_LOCATION
       ? env.BOT_MINING_CHEST_LOCATION.split(',')
