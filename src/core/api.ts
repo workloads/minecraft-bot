@@ -29,7 +29,11 @@ class Api {
           commands[command](instance, { username: 'Console', argument: block })
           rep.send({ statusCode: 'success', code: 0, message: instance.locale.msg_api_sent })
         } catch (error) {
-          rep.send({ statusCode: 'success', code: 0, message: instance.locale.msg_command_notfound.replace('%s', command) })
+          rep.send({
+            statusCode: 'success',
+            code: 0,
+            message: instance.locale.msg_command_notfound.replace('%s', command),
+          })
         }
       },
     )
@@ -57,7 +61,10 @@ class Api {
         process.exit(1)
       }
 
-      instance.log.info(instance.locale.msg_api_success, `localhost:${instance.getSettings().interfacePort}`)
+      instance.log.info(
+        instance.locale.msg_api_success,
+        `localhost:${instance.getSettings().interfacePort}`,
+      )
     })
   }
 }

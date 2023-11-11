@@ -4,9 +4,8 @@ import MinecraftData from 'minecraft-data'
 import { Args } from '../interfaces'
 
 async function attempt_mining(instance: MineflayerBot, args: Args): Promise<void> {
-
   if (instance.getStates().entity) return
-  
+
   let block = args.argument
 
   if (!block) return
@@ -61,9 +60,11 @@ async function stop_mining(instance: MineflayerBot): Promise<void> {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function find_desired_block(instance: MineflayerBot): Promise<any> {
   return instance.getBot().findBlock({
-    matching: (b) => b.name === instance.getStates().block && b.position.y - instance.getBot().entity.position.y < 6,
+    matching: (b) =>
+      b.name === instance.getStates().block &&
+      b.position.y - instance.getBot().entity.position.y < 6,
     maxDistance: instance.getSettings().miningDistance,
-    useExtraInfo: true
+    useExtraInfo: true,
   })
 }
 

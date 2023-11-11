@@ -53,7 +53,7 @@ class MineflayerBot {
       commandsPrefix: env.BOT_CHAT_COMMAND_PREFIX ? env.BOT_CHAT_COMMAND_PREFIX : '#',
 
       mappedBlocks: env.BOT_MAPPED_BLOCKS ? env.BOT_MAPPED_BLOCKS.split(',') : [],
-      mappedLogs: env.BOT_MAPPED_LOGS ? env.BOT_MAPPED_LOGS.split(',') : []
+      mappedLogs: env.BOT_MAPPED_LOGS ? env.BOT_MAPPED_LOGS.split(',') : [],
     }
   }
 
@@ -63,7 +63,7 @@ class MineflayerBot {
       stopMining: false,
       stopMurdering: false,
       block: undefined,
-      entity: undefined
+      entity: undefined,
     }
   }
 
@@ -208,7 +208,7 @@ class MineflayerBot {
 - ${this.locale.embed_description_command} ${command} ${params ? params : ''}
 \`\`\``,
     )
-    
+
     try {
       await this.channel.send({ embeds: [embed] })
     } catch (error) {
