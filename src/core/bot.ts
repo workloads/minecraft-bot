@@ -189,23 +189,23 @@ class MineflayerBot {
     if (!this.channel.isTextBased()) return // This will never happen.
 
     const embed = new EmbedBuilder()
-      .setTitle(this.locale.embed_title)
+      .setTitle(this.locale.discord_embed_title)
       .setColor(`#${env.DISCORD_EMBED_COLOR}`) // translates to `#2f3136`
       .setThumbnail(`https://mc-heads.net/avatar/${username}`)
       .setAuthor({
         iconURL: `https://mc-heads.net/avatar/${this.bot.username}`,
-        name: this.locale.embed_author_text,
+        name: this.locale.discord_embed_author_text,
       })
       .setTimestamp()
 
     embed.setDescription(
-      `### ${this.locale.embed_description_command}
+      `### ${this.locale.discord_embed_description_command}
 \`\`\`yml
-- ${this.locale.embed_description_self_label} ${this.bot.username}
-      
-- ${this.locale.embed_description_commander} ${username}
-      
-- ${this.locale.embed_description_command} ${command} ${params ? params : ''}
+- ${this.locale.discord_embed_description_self_label} ${this.bot.username}
+
+- ${this.locale.discord_discord_embed_description_commander} ${username}
+
+- ${this.locale.discord_embed_description_command} ${command} ${params ? params : ''}
 \`\`\``,
     )
 

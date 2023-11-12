@@ -1,4 +1,11 @@
 {
+  "discord_embed_title": "Mineflayer-based Excavation Assistant",
+  "discord_embed_author_text": "Status",
+  "discord_embed_description_title": "Command received.",
+  "discord_embed_description_self_label": "Bot:",
+  "discord_discord_embed_description_commander": "Commander:",
+  "discord_embed_description_command": "Command:",
+
   "msg_greetings": "The bot is loaded and ready for actions.",
 
   "msg_api_received": "Received a message using the API.",
@@ -66,12 +73,5 @@
 
   "msg_sleeper_day": "The bot cannot sleep at day.",
   "msg_sleeper_monsters": "The bot cannot sleep while monsters are nearby.",
-  "msg_sleeper_sleeping": "The bot is already sleeping.",
-
-  "embed_title": "Mineflayer-based Excavation Assistant",
-  "embed_author_text": "Command Report",
-  "embed_description_title": "Command has been issued.",
-  "embed_description_self_label": "Bot Username:",
-  "embed_description_commander": "Commander:",
-  "embed_description_command": "Command ran:"
+  "msg_sleeper_sleeping": "The bot is already sleeping."
 }

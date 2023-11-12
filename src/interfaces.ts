@@ -86,12 +86,12 @@ interface Strings {
   msg_sleeper_day: string
   msg_sleeper_monsters: string
   msg_sleeper_sleeping: string
-  embed_title: string
-  embed_author_text: string
-  embed_description_title: string
-  embed_description_self_label: string
-  embed_description_commander: string
-  embed_description_command: string
+  discord_embed_title: string
+  discord_embed_author_text: string
+  discord_embed_description_title: string
+  discord_embed_description_self_label: string
+  discord_discord_embed_description_commander: string
+  discord_embed_description_command: string
 }
 
 export { BotStates, BotSettings, Strings, Args }
