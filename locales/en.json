@@ -1,4 +1,8 @@
 {
+  "api_command_sent": "[API] command sent",
+  "api_interface_start": "[API] interface started; running on %s",
+  "api_interface_fail": "[API] interface failed to start",
+  "api_message_received": "[API] message received",
   "discord_embed_title": "Mineflayer-based Excavation Assistant",
   "discord_embed_author_text": "Status",
   "discord_embed_description_title": "Command received.",
@@ -8,10 +12,7 @@
 
   "msg_greetings": "The bot is loaded and ready for actions.",
 
-  "msg_api_received": "Received a message using the API.",
-  "msg_api_success": "The API has been configured. Running on %s",
-  "msg_api_failure": "",
-  "msg_api_sent": "The command was sent successfully.",
+  "env_config_load_success": "[ENVIRONMENT] loaded configuration from environment",
 
   "msg_discord_failure": "Discord token is not present, Discord Integration is not activated.",
   "msg_discord_success": "The discord integration was successfully configured.",
@@ -25,8 +26,6 @@
   "msg_discord_channel_failure": "The discord channel is not working.",
 
   "env_config_load_fail": "[ENVIRONMENT] unable to load configuration from environment",
-  "env_config_load_success": "[ENVIRONMENT] loaded configuration from environment",
-
   "msg_credentials_success": "The credentials are valid. continuing.",
   "msg_credentials_failure": "The credentials are invalid. Please insert valid credentials.",
 

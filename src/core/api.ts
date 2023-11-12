@@ -20,14 +20,14 @@ class Api {
         }>,
         rep,
       ) {
-        instance.log.info(instance.locale.msg_api_received)
+        instance.log.info(instance.locale.api_message_received)
 
         const command = req.query.type
         const block = req.query.block
 
         try {
           commands[command](instance, { username: 'Console', argument: block })
-          rep.send({ statusCode: 'success', code: 0, message: instance.locale.msg_api_sent })
+          rep.send({ statusCode: 'success', code: 0, message: instance.locale.api_command_sent })
         } catch (error) {
           rep.send({
             statusCode: 'success',
@@ -57,12 +57,12 @@ class Api {
 
     this.fastify.listen({ port: instance.getSettings().interfacePort }, async function (err) {
       if (err) {
-        instance.log.info(instance.locale.msg_api_failure)
+        instance.log.info(instance.locale.api_interface_fail)
         process.exit(1)
       }
 
       instance.log.info(
-        instance.locale.msg_api_success,
+        instance.locale.api_interface_start,
         `localhost:${instance.getSettings().interfacePort}`,
       )
     })

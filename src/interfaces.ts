@@ -40,10 +40,10 @@ interface BotSettings {
 
 interface Strings {
   msg_greetings: string
-  msg_api_received: string
-  msg_api_success: string
-  msg_api_failure: string
-  msg_api_sent: string
+  api_message_received: string
+  api_interface_start: string
+  api_interface_fail: string
+  api_command_sent: string
   msg_discord_failure: string
   msg_discord_success: string
   msg_discord_token_not_present: string
