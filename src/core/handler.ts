@@ -1,13 +1,13 @@
 import mineflayer from 'mineflayer'
 import { instance } from '../index'
 
-import { sleep, wake } from '../commands/rest'
-import { attempt_mining, stop_mining } from '../commands/excavation'
+import { sleep, wake } from '../commands/sleep'
+import { attempt_mining, stop_mining } from '../commands/mine'
 import { MineflayerBot } from './bot'
-import { go_to_player } from '../commands/travel'
+import { go_to_player } from '../commands/move'
 import { Args } from '../interfaces'
 import { halt, status_request } from '../commands/health'
-import { attempt_murder, stop_murdering } from '../commands/murder'
+import { attempt_murder, stop_murdering } from '../commands/attack'
 
 const commands: { [key in string]: (instance: MineflayerBot, argument: Args) => Promise<void> } = {
   sleep: sleep,

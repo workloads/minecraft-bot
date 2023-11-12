@@ -18,7 +18,7 @@ async function attempt_murder(instance: MineflayerBot, args: Args): Promise<void
     return
   }
 
-  instance.log.info('I was commanded to murder %s', desired.displayName)
+  instance.log.info('I was commanded to attack %s', desired.displayName)
 
   instance.getStates().entity = entity.toLowerCase()
 
@@ -28,10 +28,10 @@ async function attempt_murder(instance: MineflayerBot, args: Args): Promise<void
     }
   }
 
-  await murder(instance)
+  await attack(instance)
 }
 
-async function murder(instance: MineflayerBot): Promise<void> {
+async function attack(instance: MineflayerBot): Promise<void> {
   if (instance.getStates().stopMurdering) {
     stop_murdering(instance)
     return
@@ -56,7 +56,7 @@ async function murder(instance: MineflayerBot): Promise<void> {
     instance.getBot().removeAllListeners('entityDead')
 
     await instance.getBot().waitForTicks(20)
-    murder(instance)
+    attack(instance)
   })
 }
 
