@@ -25,14 +25,14 @@ function find_desired_bed(instance: MineflayerBot): any {
 
 async function sleep(instance: MineflayerBot): Promise<void> {
   if (instance.getBot().time.isDay) {
-    instance.log.info(instance.locale.msg_sleeper_day)
+    instance.log.info(instance.locale.bot_sleep_fail_day)
     return
   }
 
   const bed = find_desired_bed(instance)
 
   if (!bed) {
-    instance.log.info(instance.locale.msg_sleeper_failure)
+    instance.log.info(instance.locale.bot_sleep_fail)
     return
   }
 
@@ -48,7 +48,7 @@ async function sleep(instance: MineflayerBot): Promise<void> {
       .sleep(bed)
       .catch((reason) => {
         if (reason.message.includes('monsters nearby')) {
-          instance.log.info(instance.locale.msg_sleeper_monsters)
+          instance.log.info(instance.locale.bot_sleep_fail_monsters)
         }
       })
   })

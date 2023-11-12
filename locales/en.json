@@ -1,33 +1,46 @@
 {
   "api_command_sent": "[API] command sent",
   "api_interface_start": "[API] interface started; running on %s",
-  "api_interface_fail": "[API] interface failed to start",
+  "api_interface_fail": "[API] unable to start interface",
   "api_message_received": "[API] message received",
 
-  "bot_command_fail": "[BOT:command] failed to execute command: `%s`",
-  "bot_command_fail_notfound": "[BOT:command] failed to find command: `%s`",
+  "bot_command_fail": "[BOT:command] unable to execute command: `%s`",
+  "bot_command_fail_notfound": "[BOT:command] unable to find command: `%s`",
   "bot_command_success": "[BOT:command] command executed: `%s`",
 
-  "bot_search_block_fail": "[BOT:search:block] unable to find more blocks of type `%s`; starting depositing",
-  "bot_search_block_success": "[BOT:search:block] found block of type `%s`",
-
-  "bot_search_chest_fail": "[BOT:search:chest] unable to find chest; not at expected location",
-  "bot_search_chest_success": "[BOT:search:chest] found chest",
-
-  "msg_finder_player_fail": "[BOT:search:player] unable to find player; not within render distance",
-  "msg_finder_player_success": "[BOT:search:player] found player `%s` ",
-
-  "msg_finder_bed_success": "The finder process was able to find a bed.",
-  "msg_finder_bed_fail": "The finder process was unable to find a bed.",
-
-  "msg_miner_start_success": "The mining process has been successfully started.",
-  "msg_miner_start_fail": "[BOT:mine] The mining process had an unexpected error.",
+  "bot_deposit_fail": "[BOT:deposit] failed to deposit",
+  "bot_deposit_start": "[BOT:deposit] depositing started",
+  "bot_deposit_success": "[BOT:deposit] depositing completed",
 
   "bot_greeting": "[BOT] ready for tasking",
 
+  "bot_mine_fail_start": "[BOT:mine] failed to start mining",
+  "bot_mine_inprogress": "[BOT:mine] mining in progress",
+  "bot_mine_start": "[BOT:mine] mining started",
+  "bot_mine_stop": "[BOT:mine] stopped mining",
+
+  "bot_search_bed_fail": "[BOT:search:bed] found bed",
+  "bot_search_bed_success": "[BOT:search:bed] failed to find bed",
+
+  "bot_search_block_fail": "[BOT:search:block] failed to find more blocks of type `%s`; starting depositing",
+  "bot_search_block_success": "[BOT:search:block] found block of type `%s`",
+
+  "bot_search_chest_fail": "[BOT:search:chest] failed to find chest; not at expected location",
+  "bot_search_chest_success": "[BOT:search:chest] found chest",
+
+  "bot_search_player_fail": "[BOT:search:player] failed to find player; not within render distance",
+  "bot_search_player_success": "[BOT:search:player] found player `%s` ",
+
+  "bot_sleep_fail": "[BOT:sleep] failed to sleep",
+  "bot_sleep_fail_day": "[BOT:sleep] failed to sleep; wrong time of day",
+  "bot_sleep_fail_monsters": "[BOT:sleep] failed to sleep; monsters nearby",
+  "bot_sleep_inprogress": "[BOT:sleep] sleeping in progress",
+  "bot_sleep_start": "[BOT:sleep] sleeping started",
+  "bot_sleep_success": "[BOT:sleep] sleeping completed",
+
   "discord_embed_title": "Mineflayer-based Excavation Assistant",
   "discord_embed_author_text": "Status",
-  "discord_embed_description_title": "Command received.",
+  "discord_embed_description_title": "Command received",
   "discord_embed_description_self_label": "Bot:",
   "discord_discord_embed_description_commander": "Commander:",
   "discord_embed_description_command": "Command:",
@@ -49,13 +62,6 @@
   "msg_credentials_success": "The credentials are valid. continuing.",
   "msg_credentials_failure": "The credentials are invalid. Please insert valid credentials.",
 
-  "msg_miner_stopped": "The mining process has been stopped.",
-  "msg_miner_deposit_start": "The deposit process has started.",
-
-  "msg_miner_deposit_success": "The deposit process was successful.",
-  "msg_miner_deposit_failure": "The deposit process has failed ",
-
-  "msg_miner_already_started": "The mining process has already been started.",
 
   "msg_interface_inventory_success": "Web Inventory Viewer has started successfully.",
   "msg_interface_inventory_failure": "Web Inventory Viewer has failed unexpectedly.",
@@ -65,13 +71,4 @@
 
   "msg_command_unauthorized": "The bot has denied a command from an unauthorized user.",
   "msg_command_blacklisted": "The bot has denied a command from a blacklisted user.",
-
-  "msg_sleeper_commence": "The bot has started the sleeping process.",
-
-  "msg_sleeper_failure": "The bot was unable to sleep.",
-  "msg_sleeper_success": "The bot has successfully slept.",
-
-  "msg_sleeper_day": "The bot cannot sleep at day.",
-  "msg_sleeper_monsters": "The bot cannot sleep while monsters are nearby.",
-  "msg_sleeper_sleeping": "The bot is already sleeping."
 }

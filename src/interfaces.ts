@@ -60,17 +60,17 @@ interface Strings {
   bot_search_block_fail: string
   bot_search_chest_success: string
   bot_search_chest_fail: string
-  msg_finder_player_success: string
-  msg_finder_player_fail: string
-  msg_finder_bed_success: string
-  msg_finder_bed_fail: string
-  msg_miner_start_success: string
-  msg_miner_start_fail: string
-  msg_miner_stopped: string
-  msg_miner_deposit_start: string
-  msg_miner_deposit_success: string
-  msg_miner_deposit_failure: string
-  msg_miner_already_started: string
+  bot_search_player_success: string
+  bot_search_player_fail: string
+  bot_search_bed_success: string
+  bot_search_bed_fail: string
+  bot_mine_start: string
+  bot_mine_fail_start: string
+  bot_mine_stop: string
+  bot_deposit_start: string
+  bot_deposit_success: string
+  bot_deposit_fail: string
+  bot_mine_inprogress: string
   msg_interface_inventory_success: string
   msg_interface_inventory_failure: string
   msg_plugins_success: string
@@ -80,12 +80,12 @@ interface Strings {
   bot_command_fail_notfound: string
   msg_command_unauthorized: string
   msg_command_blacklisted: string
-  msg_sleeper_commence: string
-  msg_sleeper_failure: string
-  msg_sleeper_success: string
-  msg_sleeper_day: string
-  msg_sleeper_monsters: string
-  msg_sleeper_sleeping: string
+  bot_sleep_start: string
+  bot_sleep_fail: string
+  bot_sleep_success: string
+  bot_sleep_fail_day: string
+  bot_sleep_fail_monsters: string
+  bot_sleep_inprogress: string
   discord_embed_title: string
   discord_embed_author_text: string
   discord_embed_description_title: string

@@ -16,7 +16,7 @@ async function attempt_mining(instance: MineflayerBot, args: Args): Promise<void
   const mcData = MinecraftData(instance.getBot().version)
 
   if (instance.getStates().isMining) {
-    instance.log.info(instance.locale.msg_miner_already_started)
+    instance.log.info(instance.locale.bot_mine_inprogress)
     return
   }
 
@@ -42,7 +42,7 @@ async function attempt_mining(instance: MineflayerBot, args: Args): Promise<void
     return
   }
 
-  instance.log.info(instance.locale.msg_miner_start_success)
+  instance.log.info(instance.locale.bot_mine_start)
 
   instance.getStates().isMining = true
 
@@ -74,12 +74,12 @@ async function mining(instance: MineflayerBot): Promise<void> {
   if (instance.getStates().stopMining) {
     instance.getStates().stopMining = false
 
-    instance.log.info(instance.locale.msg_miner_stopped)
+    instance.log.info(instance.locale.bot_mine_stop)
     return
   }
 
   if (bot.inventory.emptySlotCount() <= 1) {
-    instance.log.info(instance.locale.msg_miner_deposit_start)
+    instance.log.info(instance.locale.bot_deposit_start)
 
     await deposit(instance, true)
     return
@@ -146,7 +146,7 @@ async function deposit(instance: MineflayerBot, retry = false): Promise<void> {
 
         openChest.close()
 
-        instance.log.info(instance.locale.msg_miner_deposit_start)
+        instance.log.info(instance.locale.bot_deposit_start)
 
         if (retry) {
           await mining(instance)
