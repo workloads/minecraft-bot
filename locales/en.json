@@ -24,8 +24,8 @@
   "msg_discord_channel_success": "The discord channel has been successfully cached.",
   "msg_discord_channel_failure": "The discord channel is not working.",
 
-  "msg_env_failure": "The env reader has failed, please check the .env file.",
-  "msg_env_success": "The env reader has successfully loaded variables.",
+  "env_config_load_fail": "[ENVIRONMENT] unable to load configuration from environment",
+  "env_config_load_success": "[ENVIRONMENT] loaded configuration from environment",
 
   "msg_credentials_success": "The credentials are valid. continuing.",
   "msg_credentials_failure": "The credentials are invalid. Please insert valid credentials.",

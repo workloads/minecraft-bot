@@ -52,8 +52,8 @@ interface Strings {
   msg_discord_request_channel_id: string
   msg_discord_channel_success: string
   msg_discord_channel_failure: string
-  msg_env_failure: string
-  msg_env_success: string
+  env_config_load_fail: string
+  env_config_load_success: string
   msg_credentials_success: string
   msg_credentials_failure: string
   msg_finder_block_success: string
