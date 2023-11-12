@@ -39,7 +39,7 @@ interface BotSettings {
 }
 
 interface Strings {
-  msg_greetings: string
+  bot_greeting: string
   api_message_received: string
   api_interface_start: string
   api_interface_fail: string
@@ -56,16 +56,16 @@ interface Strings {
   env_config_load_success: string
   msg_credentials_success: string
   msg_credentials_failure: string
-  msg_finder_block_success: string
-  msg_finder_block_failure: string
-  msg_finder_chest_success: string
-  msg_finder_chest_failure: string
+  bot_search_block_success: string
+  bot_search_block_fail: string
+  bot_search_chest_success: string
+  bot_search_chest_fail: string
   msg_finder_player_success: string
-  msg_finder_player_failure: string
+  msg_finder_player_fail: string
   msg_finder_bed_success: string
-  msg_finder_bed_failure: string
+  msg_finder_bed_fail: string
   msg_miner_start_success: string
-  msg_miner_start_failure: string
+  msg_miner_start_fail: string
   msg_miner_stopped: string
   msg_miner_deposit_start: string
   msg_miner_deposit_success: string
@@ -75,9 +75,9 @@ interface Strings {
   msg_interface_inventory_failure: string
   msg_plugins_success: string
   msg_plugins_failure: string
-  msg_command_failure: string
-  msg_command_success: string
-  msg_command_notfound: string
+  bot_command_fail: string
+  bot_command_success: string
+  bot_command_fail_notfound: string
   msg_command_unauthorized: string
   msg_command_blacklisted: string
   msg_sleeper_commence: string

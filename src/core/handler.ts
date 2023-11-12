@@ -38,7 +38,7 @@ function command_handler(bot: mineflayer.Bot) {
     const command = match[1]
     // eslint-disable-next-line no-prototype-builtins
     if (!commands.hasOwnProperty(command)) {
-      instance.log.info(instance.locale.msg_command_failure)
+      instance.log.info(instance.locale.bot_command_fail)
       return
     }
 

@@ -58,7 +58,7 @@ bot.once('spawn', async () => {
   // disable breaking of blocks when moving
   bot.pathfinder.movements.canDig = false
 
-  instance.log.info(instance.locale.msg_greetings)
+  instance.log.info(instance.locale.bot_greeting)
 })
 
 bot.on('death', async () => {

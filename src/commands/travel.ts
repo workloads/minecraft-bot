@@ -6,7 +6,7 @@ async function go_to_player(instance: MineflayerBot, args: Args): Promise<void> 
   const player = instance.getBot().players[args.username]
 
   if (!player) {
-    instance.log.error(instance.locale.msg_finder_player_failure)
+    instance.log.error(instance.locale.msg_finder_player_fail)
     return
   }
 

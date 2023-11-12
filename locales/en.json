@@ -3,6 +3,28 @@
   "api_interface_start": "[API] interface started; running on %s",
   "api_interface_fail": "[API] interface failed to start",
   "api_message_received": "[API] message received",
+
+  "bot_command_fail": "[BOT:command] failed to execute command: `%s`",
+  "bot_command_fail_notfound": "[BOT:command] failed to find command: `%s`",
+  "bot_command_success": "[BOT:command] command executed: `%s`",
+
+  "bot_search_block_fail": "[BOT:search:block] unable to find more blocks of type `%s`; starting depositing",
+  "bot_search_block_success": "[BOT:search:block] found block of type `%s`",
+
+  "bot_search_chest_fail": "[BOT:search:chest] unable to find chest; not at expected location",
+  "bot_search_chest_success": "[BOT:search:chest] found chest",
+
+  "msg_finder_player_fail": "[BOT:search:player] unable to find player; not within render distance",
+  "msg_finder_player_success": "[BOT:search:player] found player `%s` ",
+
+  "msg_finder_bed_success": "The finder process was able to find a bed.",
+  "msg_finder_bed_fail": "The finder process was unable to find a bed.",
+
+  "msg_miner_start_success": "The mining process has been successfully started.",
+  "msg_miner_start_fail": "[BOT:mine] The mining process had an unexpected error.",
+
+  "bot_greeting": "[BOT] ready for tasking",
+
   "discord_embed_title": "Mineflayer-based Excavation Assistant",
   "discord_embed_author_text": "Status",
   "discord_embed_description_title": "Command received.",
@@ -10,12 +32,11 @@
   "discord_discord_embed_description_commander": "Commander:",
   "discord_embed_description_command": "Command:",
 
-  "msg_greetings": "The bot is loaded and ready for actions.",
-
+  "env_config_load_fail": "[ENVIRONMENT] unable to load configuration from environment",
   "env_config_load_success": "[ENVIRONMENT] loaded configuration from environment",
 
-  "msg_discord_failure": "Discord token is not present, Discord Integration is not activated.",
-  "msg_discord_success": "The discord integration was successfully configured.",
+  "msg_discord_failure": "[DISCORD] Discord token is not present, Discord Integration is not activated.",
+  "msg_discord_success": "[DISCORD] The discord integration was successfully configured.",
 
   "msg_discord_token_not_present": "The discord token is not present. Discord Integration is not activated",
   "msg_discord_token_failure": "The discord token is invalid. Discord Integration is not activated.",
@@ -25,24 +46,8 @@
   "msg_discord_channel_success": "The discord channel has been successfully cached.",
   "msg_discord_channel_failure": "The discord channel is not working.",
 
-  "env_config_load_fail": "[ENVIRONMENT] unable to load configuration from environment",
   "msg_credentials_success": "The credentials are valid. continuing.",
   "msg_credentials_failure": "The credentials are invalid. Please insert valid credentials.",
-
-  "msg_finder_block_success": "The finder process cannot find the block %s",
-  "msg_finder_block_failure": "The finder process cannot find anymore of %s, commencing deposit process.",
-
-  "msg_finder_chest_success": "The chest has been successfully spotted.",
-  "msg_finder_chest_failure": "Could not find the chest mentioned in the environmental variable.",
-
-  "msg_finder_player_success": "The player %s has been spotted.",
-  "msg_finder_player_failure": "The bot cannot find you, please check the render distance.",
-
-  "msg_finder_bed_success": "The finder process was able to find a bed.",
-  "msg_finder_bed_failure": "The finder process was unable to find a bed.",
-
-  "msg_miner_start_success": "The mining process has been successfully started.",
-  "msg_miner_start_failure": "The mining process had an unexpected error.",
 
   "msg_miner_stopped": "The mining process has been stopped.",
   "msg_miner_deposit_start": "The deposit process has started.",
@@ -57,10 +62,6 @@
 
   "msg_plugins_failure": "The plugin loader has failed unexpectedly.",
   "msg_plugins_success": "The plugin loader has successfully loaded plugins.",
-
-  "msg_command_failure": "The command %s has failed unexpectedly.",
-  "msg_command_success": "The command %s was successful.",
-  "msg_command_notfound": "The command %s was not found.",
 
   "msg_command_unauthorized": "The bot has denied a command from an unauthorized user.",
   "msg_command_blacklisted": "The bot has denied a command from a blacklisted user.",

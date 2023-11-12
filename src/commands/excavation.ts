@@ -29,7 +29,7 @@ async function attempt_mining(instance: MineflayerBot, args: Args): Promise<void
   }
 
   if (!mcData.blocksByName[block]) {
-    instance.log.info(instance.locale.msg_finder_block_failure, block)
+    instance.log.info(instance.locale.bot_search_block_fail, block)
     return
   }
 
@@ -38,7 +38,7 @@ async function attempt_mining(instance: MineflayerBot, args: Args): Promise<void
   const desired = await find_desired_block(instance)
 
   if (!desired) {
-    instance.log.info(instance.locale.msg_finder_block_failure, block)
+    instance.log.info(instance.locale.bot_search_block_fail, block)
     return
   }
 
@@ -89,7 +89,7 @@ async function mining(instance: MineflayerBot): Promise<void> {
 
   if (!desired) {
     instance.log.info(
-      instance.locale.msg_finder_block_failure,
+      instance.locale.bot_search_block_fail,
       instance.getStates().block?.replace('_', ' '),
     )
     instance.getStates().isMining = false
@@ -152,7 +152,7 @@ async function deposit(instance: MineflayerBot, retry = false): Promise<void> {
           await mining(instance)
         }
       } else {
-        instance.log.error(`\x1b[41m${instance.locale.msg_finder_chest_failure}\x1b[0m`)
+        instance.log.error(`\x1b[41m${instance.locale.bot_search_chest_fail}\x1b[0m`)
       }
     }
   })

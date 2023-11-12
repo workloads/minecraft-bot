@@ -32,7 +32,7 @@ class Api {
           rep.send({
             statusCode: 'success',
             code: 0,
-            message: instance.locale.msg_command_notfound.replace('%s', command),
+            message: instance.locale.bot_command_fail_notfound.replace('%s', command),
           })
         }
       },
