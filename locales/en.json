@@ -4,6 +4,9 @@
   "api_interface_fail": "[API] unable to start interface",
   "api_message_received": "[API] message received",
 
+  "auth_fail": "[AUTH] unable to validate credentials",
+  "auth_success": "[AUTH] credentials validated",
+
   "bot_command_fail": "[BOT:command] failed to execute command: `%s`",
   "bot_command_fail_denylisted": "[BOT:command] failed to execute command; user deny-listed",
   "bot_command_fail_notfound": "[BOT:command] failed to find command: `%s`",

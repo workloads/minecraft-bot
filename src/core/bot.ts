@@ -126,7 +126,7 @@ class MineflayerBot {
     // Minecraft Bot Initializer.
     const credentials = new ConfigManager().readConfig(this)
     if (!credentials) {
-      this.log.info(strings.msg_credentials_failure)
+      this.log.info(strings.auth_fail)
       process.exit(4)
     }
 
