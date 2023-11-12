@@ -44,8 +44,8 @@ interface Strings {
   api_interface_start: string
   api_interface_fail: string
   api_command_sent: string
-  msg_discord_failure: string
-  msg_discord_success: string
+  discord_token_fail_notfound: string
+  discord_token_success: string
   msg_discord_token_not_present: string
   msg_discord_token_failure: string
   msg_discord_token_success: string
@@ -54,8 +54,6 @@ interface Strings {
   msg_discord_channel_failure: string
   env_config_load_fail: string
   env_config_load_success: string
-  msg_credentials_success: string
-  msg_credentials_failure: string
   bot_search_block_success: string
   bot_search_block_fail: string
   bot_search_chest_success: string
@@ -78,8 +76,8 @@ interface Strings {
   bot_command_fail: string
   bot_command_success: string
   bot_command_fail_notfound: string
-  msg_command_unauthorized: string
-  msg_command_blacklisted: string
+  bot_command_fail_unauthorized: string
+  bot_command_fail_denylisted: string
   bot_sleep_start: string
   bot_sleep_fail: string
   bot_sleep_success: string

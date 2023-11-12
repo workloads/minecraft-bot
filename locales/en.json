@@ -4,8 +4,10 @@
   "api_interface_fail": "[API] unable to start interface",
   "api_message_received": "[API] message received",
 
-  "bot_command_fail": "[BOT:command] unable to execute command: `%s`",
-  "bot_command_fail_notfound": "[BOT:command] unable to find command: `%s`",
+  "bot_command_fail": "[BOT:command] failed to execute command: `%s`",
+  "bot_command_fail_denylisted": "[BOT:command] failed to execute command; user deny-listed",
+  "bot_command_fail_notfound": "[BOT:command] failed to find command: `%s`",
+  "bot_command_fail_unauthorized": "[BOT:command] failed to execute command; user not authorized",
   "bot_command_success": "[BOT:command] command executed: `%s`",
 
   "bot_deposit_fail": "[BOT:deposit] failed to deposit",
@@ -61,14 +63,6 @@
   "msg_discord_channel_success": "The discord channel has been successfully cached.",
   "msg_discord_channel_failure": "The discord channel is not working.",
 
-  "msg_credentials_success": "The credentials are valid. continuing.",
-  "msg_credentials_failure": "The credentials are invalid. Please insert valid credentials.",
-
-
-
-
-  "msg_command_unauthorized": "The bot has denied a command from an unauthorized user.",
-  "msg_command_blacklisted": "The bot has denied a command from a blacklisted user.",
   "plugins_fail": "[PLUGIN] failed to load plugins",
   "plugins_success": "[PLUGIN] plugins loaded"
 }
