@@ -53,18 +53,15 @@
   "env_config_load_fail": "[ENVIRONMENT] unable to load configuration from environment",
   "env_config_load_success": "[ENVIRONMENT] loaded configuration from environment",
 
-  "msg_discord_failure": "[DISCORD] Discord token is not present, Discord Integration is not activated.",
-  "msg_discord_success": "[DISCORD] The discord integration was successfully configured.",
+  "discord_channel_fail_notfound": "[DISCORD] failed to find channel identifier",
+  "discord_channel_fail_missingchannelid": "[DISCORD] unable to find channel identifier",
+  "discord_channel_success": "[DISCORD] found and cached channel",
+  "discord_token_fail": "[DISCORD] unable to validate token",
+  "discord_token_fail_notfound": "[DISCORD] unable to find token; integration disabled",
+  "discord_token_success": "[DISCORD] token found",
+
   "inventoryviewer_interface_success": "[INV-VIEWER] viewer started",
   "inventoryviewer_interface_fail": "[INV-VIEWER] failed to start viewer",
-
-  "msg_discord_token_not_present": "The discord token is not present. Discord Integration is not activated",
-  "msg_discord_token_failure": "The discord token is invalid. Discord Integration is not activated.",
-  "msg_discord_token_success": "The discord token is valid, commencing login process.",
-
-  "msg_discord_request_channel_id": "Please insert the discord channel in .env file.",
-  "msg_discord_channel_success": "The discord channel has been successfully cached.",
-  "msg_discord_channel_failure": "The discord channel is not working.",
 
   "plugins_fail": "[PLUGIN] failed to load plugins",
   "plugins_success": "[PLUGIN] plugins loaded"

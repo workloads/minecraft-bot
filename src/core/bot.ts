@@ -143,27 +143,27 @@ class MineflayerBot {
 
     // Discord Integration Initializer.
     if (this.settings.discordToken === undefined) {
-      this.log.info(strings.msg_discord_token_not_present)
+      this.log.info(strings.discord_token_fail_notfound)
       return
     }
 
     this.discord.on('shardReady', () => {
-      this.log.info(strings.msg_discord_success)
+      this.log.info(strings.discord_token_success)
 
       if (!this.settings.discordChannel) {
-        this.log.error(strings.msg_discord_request_channel_id)
+        this.log.error(strings.discord_channel_fail_missingchannelid)
         return
       }
 
       if (this.settings.discordChannel) {
         this.channel = this.discord.channels.cache.get(this.settings.discordChannel)
       } else {
-        this.log.info(strings.msg_discord_request_channel_id)
+        this.log.info(strings.discord_channel_fail_missingchannelid)
       }
     })
 
     this.discord.login(this.settings.discordToken).catch(() => {
-      this.log.error(strings.msg_discord_token_failure)
+      this.log.error(strings.discord_token_fail)
       return
     })
   }
@@ -212,7 +212,7 @@ class MineflayerBot {
     try {
       await this.channel.send({ embeds: [embed] })
     } catch (error) {
-      this.locale.msg_discord_channel_failure
+      this.locale.discord_channel_fail_notfound
     }
   }
 }

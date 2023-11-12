@@ -44,16 +44,14 @@ interface Strings {
   api_interface_start: string
   api_interface_fail: string
   api_command_sent: string
+  discord_token_fail: string
   discord_token_fail_notfound: string
   discord_token_success: string
-  msg_discord_token_not_present: string
-  msg_discord_token_failure: string
-  msg_discord_token_success: string
-  msg_discord_request_channel_id: string
-  msg_discord_channel_success: string
-  msg_discord_channel_failure: string
+  discord_channel_fail_missingchannelid: string
+  discord_channel_success: string
   auth_success: string
   auth_fail: string
+  discord_channel_fail_notfound: string
   env_config_load_fail: string
   env_config_load_success: string
   bot_search_block_success: string
