@@ -66,9 +66,9 @@
 
 
 
-  "msg_plugins_failure": "The plugin loader has failed unexpectedly.",
-  "msg_plugins_success": "The plugin loader has successfully loaded plugins.",
 
   "msg_command_unauthorized": "The bot has denied a command from an unauthorized user.",
   "msg_command_blacklisted": "The bot has denied a command from a blacklisted user.",
+  "plugins_fail": "[PLUGIN] failed to load plugins",
+  "plugins_success": "[PLUGIN] plugins loaded"
 }

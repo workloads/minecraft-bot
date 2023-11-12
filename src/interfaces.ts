@@ -71,10 +71,10 @@ interface Strings {
   bot_deposit_success: string
   bot_deposit_fail: string
   bot_mine_inprogress: string
-  msg_plugins_success: string
-  msg_plugins_failure: string
   inventoryviewer_interface_success: string
   inventoryviewer_interface_fail: string
+  plugins_success: string
+  plugins_fail: string
   bot_command_fail: string
   bot_command_success: string
   bot_command_fail_notfound: string
