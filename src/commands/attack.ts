@@ -14,11 +14,11 @@ async function attempt_murder(instance: MineflayerBot, args: Args): Promise<void
   const desired = mcData.entitiesByName[entity.toLowerCase().replace(' ', '_')]
 
   if (!desired) {
-    instance.log.info('was not able to find %s', entity)
+    instance.log.info('[BOT:attack] unable to find `%s`', entity)
     return
   }
 
-  instance.log.info('I was commanded to attack %s', desired.displayName)
+  instance.log.info('[BOT:attack] attacking `%s`', desired.displayName)
 
   instance.getStates().entity = entity.toLowerCase()
 
