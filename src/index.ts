@@ -21,7 +21,7 @@ function createBot(): {
   const bot = instance.getBot()
 
   inventoryView(bot, { port: instance.getSettings().inventoryPort, log: false })
-  instance.log.info(strings.msg_interface_inventory_success, instance.getSettings().inventoryPort)
+  instance.log.info(strings.inventoryviewer_interface_success, instance.getSettings().inventoryPort)
 
   return { instance, bot }
 }

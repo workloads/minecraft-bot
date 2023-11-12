@@ -50,6 +50,8 @@
 
   "msg_discord_failure": "[DISCORD] Discord token is not present, Discord Integration is not activated.",
   "msg_discord_success": "[DISCORD] The discord integration was successfully configured.",
+  "inventoryviewer_interface_success": "[INV-VIEWER] viewer started",
+  "inventoryviewer_interface_fail": "[INV-VIEWER] failed to start viewer",
 
   "msg_discord_token_not_present": "The discord token is not present. Discord Integration is not activated",
   "msg_discord_token_failure": "The discord token is invalid. Discord Integration is not activated.",
@@ -63,8 +65,6 @@
   "msg_credentials_failure": "The credentials are invalid. Please insert valid credentials.",
 
 
-  "msg_interface_inventory_success": "Web Inventory Viewer has started successfully.",
-  "msg_interface_inventory_failure": "Web Inventory Viewer has failed unexpectedly.",
 
   "msg_plugins_failure": "The plugin loader has failed unexpectedly.",
   "msg_plugins_success": "The plugin loader has successfully loaded plugins.",
