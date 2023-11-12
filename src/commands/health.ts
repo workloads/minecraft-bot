@@ -58,14 +58,14 @@ async function status_request(instance: MineflayerBot): Promise<void> {
 
   const messages = [
     '',
-    createRaw('--------------Stats--------------', 'blue', true, true),
-    createRaw('Bot username: '),
+    createRaw('--- Status ---', 'blue', true, true),
+    createRaw('Bot: '),
     createRaw(`${instance.getBot().username}`, 'red', true, true),
-    createRaw(`Bot dimension: ${instance.getBot().game.dimension}`),
-    createRaw('Bot hunger: ', 'white', false, false, hunger_extra),
-    createRaw('Bot health: ', 'white', false, false, health_extra),
-    createRaw(`Bot location: ${pos.x} ${pos.y} ${pos.z}`),
-    createRaw('--------------Tools--------------', 'blue', true, true),
+    createRaw(`Location: ${pos.x} ${pos.y} ${pos.z}`),
+    createRaw(`Dimension: ${instance.getBot().game.dimension}`),
+    createRaw('Health: ', 'white', false, false, health_extra),
+    createRaw('Hunger: ', 'white', false, false, hunger_extra),
+    createRaw('--- Tools ---', 'blue', true, true),
   ]
 
   for (const tool of tools) {

@@ -190,7 +190,7 @@ class MineflayerBot {
 
     const embed = new EmbedBuilder()
       .setTitle(this.locale.discord_embed_title)
-      .setColor(`#${env.DISCORD_EMBED_COLOR}`) // translates to `#2f3136`
+      .setColor(`#${env.DISCORD_EMBED_COLOR}`)
       .setThumbnail(`https://mc-heads.net/avatar/${username}`)
       .setAuthor({
         iconURL: `https://mc-heads.net/avatar/${this.bot.username}`,
