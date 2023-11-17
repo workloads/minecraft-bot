@@ -66,12 +66,16 @@ interface Strings {
   bot_search_chest_success: string
   bot_search_player_fail: string
   bot_search_player_success: string
+  bot_search_mob_fail: string
+  bot_search_mob_success: string
   bot_sleep_fail: string
   bot_sleep_fail_day: string
   bot_sleep_fail_monsters: string
   bot_sleep_inprogress: string
   bot_sleep_start: string
   bot_sleep_success: string
+  bot_attack_success: string
+  bot_attack_fail: string
   discord_channel_fail_missingchannelid: string
   discord_channel_fail_notfound: string
   discord_channel_success: string

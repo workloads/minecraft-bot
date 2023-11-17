@@ -110,8 +110,6 @@ class MineflayerBot {
     this.settings = this.createSettings()
     this.states = this.createStates()
 
-    console.log(this.settings.operators)
-
     const chest_location = env.BOT_MINING_CHEST_LOCATION
       ? env.BOT_MINING_CHEST_LOCATION.split(',')
       : ['0', '0', '0']

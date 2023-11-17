@@ -2,7 +2,7 @@ import { MineflayerBot } from '../core/bot'
 import { Args } from '../interfaces'
 import MinecraftData from 'minecraft-data'
 
-async function attempt_murder(instance: MineflayerBot, args: Args): Promise<void> {
+async function attempt_attack(instance: MineflayerBot, args: Args): Promise<void> {
   if (instance.getStates().block) return
 
   const entity = args.argument
@@ -14,7 +14,7 @@ async function attempt_murder(instance: MineflayerBot, args: Args): Promise<void
   const desired = mcData.entitiesByName[entity.toLowerCase().replace(' ', '_')]
 
   if (!desired) {
-    instance.log.info('[BOT:attack] unable to find `%s`', entity)
+    instance.log.info(instance.locale.bot_search_mob_fail, entity)
     return
   }
 
@@ -66,4 +66,4 @@ async function stop_murdering(instance: MineflayerBot): Promise<void> {
   instance.clearEvents()
 }
 
-export { attempt_murder, stop_murdering }
+export { attempt_attack as attempt_murder, stop_murdering }

@@ -10,6 +10,11 @@ async function go_to_player(instance: MineflayerBot, args: Args): Promise<void> 
     return
   }
 
+  if (!player.entity) {
+    instance.log.error(instance.locale.bot_search_player_fail)
+    return
+  }
+
   const pos = player.entity.position
 
   instance.getBot().pathfinder.setGoal(new goals.GoalNear(pos.x, pos.y, pos.z, 2))

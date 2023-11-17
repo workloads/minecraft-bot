@@ -14,8 +14,8 @@ const commands: { [key in string]: (instance: MineflayerBot, argument: Args) => 
   wake: wake,
   mine: attempt_mining,
   stop_mining: stop_mining,
-  stop_murdering: stop_murdering,
-  murder: attempt_murder,
+  stop_attacking: stop_murdering,
+  attack: attempt_murder,
   come: go_to_player,
   status: status_request,
   quit: halt,
@@ -38,7 +38,7 @@ function command_handler(bot: mineflayer.Bot) {
     const command = match[1]
     // eslint-disable-next-line no-prototype-builtins
     if (!commands.hasOwnProperty(command)) {
-      instance.log.info(instance.locale.bot_command_fail)
+      instance.log.info(instance.locale.bot_command_fail, command)
       return
     }
 

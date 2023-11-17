@@ -15,7 +15,7 @@ function createBot(): {
   instance: MineflayerBot
   bot: mineflayer.Bot
 } {
-  const strings = require(`../locales/${[process.env.LOCALE ? process.env.LOCALE : "en"]}.json`)
+  const strings = require(`../locales/${[process.env.LOCALE ? process.env.LOCALE : 'en']}.json`)
 
   const instance = new MineflayerBot(strings)
   const bot = instance.getBot()

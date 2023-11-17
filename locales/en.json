@@ -36,6 +36,12 @@
   "bot_search_player_fail": "[BOT:search:player] failed to find player; not within render distance",
   "bot_search_player_success": "[BOT:search:player] found player `%s` ",
 
+  "bot_search_mob_fail": "[BOT:attack] unable to find `%s`",
+  "bot_search_mob_success": "[BOT:attack] found `%s`",
+
+  "bot_attack_success": "[BOT:attack] attacking `%s`.",
+  "bot_attack_fail": "[BOT:attack] unable to attack.",
+
   "bot_sleep_fail": "[BOT:sleep] failed to sleep",
   "bot_sleep_fail_day": "[BOT:sleep] failed to sleep; wrong time of day",
   "bot_sleep_fail_monsters": "[BOT:sleep] failed to sleep; monsters nearby",
