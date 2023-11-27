@@ -1,5 +1,6 @@
 import { MineflayerBot } from '../core/bot'
 
+// required to make the bot identify in it's inventory.
 const mapped_tools = ['axe', 'pickaxe', 'shovel', 'hoe', 'sword']
 
 function createRaw(
