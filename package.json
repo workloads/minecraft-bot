@@ -41,7 +41,7 @@
   "dependencies": {
     "@types/pino": "^7.0.5",
     "chalk": "^4.1.2",
-    "discord.js": "^14.13.0",
+    "discord.js": "^14.14.1",
     "dotenv": "^16.3.1",
     "fastify": "^4.21.0",
     "mineflayer": "github:prismarineJS/mineflayer",
