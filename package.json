@@ -1,6 +1,6 @@
 {
   "name": "@workloads/minecraft-bot",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A Mineflayer-based Excavation Assistant",
   "keywords": [
     "minecraft-bot",

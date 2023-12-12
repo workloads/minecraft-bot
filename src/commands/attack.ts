@@ -33,7 +33,7 @@ async function attempt_attack(instance: MineflayerBot, args: Args): Promise<void
 
 async function attack(instance: MineflayerBot): Promise<void> {
   if (instance.getStates().stopMurdering) {
-    stop_murdering(instance)
+    stop_attack(instance)
     return
   }
 
@@ -44,7 +44,7 @@ async function attack(instance: MineflayerBot): Promise<void> {
     return false
   })
   if (!entity) {
-    stop_murdering(instance)
+    stop_attack(instance)
     return
   }
 
@@ -60,10 +60,10 @@ async function attack(instance: MineflayerBot): Promise<void> {
   })
 }
 
-async function stop_murdering(instance: MineflayerBot): Promise<void> {
+async function stop_attack(instance: MineflayerBot): Promise<void> {
   instance.getStates().stopMurdering = false
   instance.getStates().entity = undefined
   instance.clearEvents()
 }
 
-export { attempt_attack as attempt_murder, stop_murdering }
+export { attempt_attack as attempt_attack, stop_attack }
