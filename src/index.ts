@@ -1,59 +1,76 @@
-import { MineflayerBot } from "./core/bot";
-import mineflayer from "mineflayer";
+/* eslint-disable @typescript-eslint/no-var-requires */
+import { Movements, pathfinder } from 'mineflayer-pathfinder'
+import { plugin as autoEat } from 'mineflayer-auto-eat'
+import { plugin as tool } from 'mineflayer-tool'
+import { plugin as pvp } from 'mineflayer-pvp'
+import { MineflayerBot } from './core/bot'
+import { configDotenv } from 'dotenv'
 
-import { Movements, pathfinder } from "mineflayer-pathfinder";
-import { plugin as autoEat } from "mineflayer-auto-eat";
-import { plugin as tool } from "mineflayer-tool";
-import Fastify, { FastifyInstance } from "fastify";
+import mineflayer from 'mineflayer'
+configDotenv()
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const inventoryView = require("mineflayer-web-inventory");
+const inventoryView = require('mineflayer-web-inventory')
 
 function createBot(): {
-    instance: MineflayerBot;
-    bot: mineflayer.Bot;
-    fastify: FastifyInstance;
+  instance: MineflayerBot
+  bot: mineflayer.Bot
 } {
-    const instance = new MineflayerBot();
-    const bot = instance.getBot();
-    const fastify = Fastify();
+  const strings = require(`../locales/${[process.env.LOCALE ? process.env.LOCALE : 'en']}.json`)
 
+  const instance = new MineflayerBot(strings)
+  const bot = instance.getBot()
 
-    inventoryView(bot, { port: instance.getSettings().inventoryPort, log: false });
-    instance.logger.info("Inventory viewer is up and listening to port: %d", instance.getSettings().inventoryPort);
+  inventoryView(bot, { port: instance.getSettings().inventoryPort, log: false })
+  instance.log.info(strings.inventoryviewer_interface_success, instance.getSettings().inventoryPort)
 
-    return { instance, bot, fastify };
+  return { instance, bot }
 }
 
-export const { instance, bot, fastify } = createBot();
+export const { instance, bot } = createBot()
 
-bot.loadPlugin(pathfinder);
-bot.loadPlugin(autoEat);
-bot.loadPlugin(tool);
+bot.once('spawn', async () => {
+  // see https://www.npmjs.com/package/mineflayer-pathfinder
+  bot.loadPlugin(pathfinder)
 
-bot.once("spawn", async () => {
-    bot.autoEat.options.priority = instance.getSettings().hungerPriority;
-    bot.autoEat.options.startAt = instance.getSettings().hungerLimit;
-    bot.autoEat.options.bannedFood = instance.getSettings().hungerBannedFood;
+  // see https://www.npmjs.com/package/mineflayer-auto-eat
+  bot.loadPlugin(autoEat)
 
-    bot.pathfinder.setMovements(new Movements(bot));
+  // see https://www.npmjs.com/package/mineflayer-tool
+  bot.loadPlugin(tool)
 
-    bot.pathfinder.movements.allow1by1towers = false;
-    bot.pathfinder.movements.allowParkour = false;
-    bot.pathfinder.movements.canDig = false;
+  // see https://www.npmjs.com/package/mineflayer-pvp
+  bot.loadPlugin(pvp)
 
-    instance.logger.info(`Plugins has been configured. Currently at ${bot.entity.position.floor()}`);
-});
+  // see https://www.npmjs.com/package/mineflayer-auto-eat#botautoeatoptionspriority
+  bot.autoEat.options.priority = instance.getSettings().hungerPriority
+  bot.autoEat.options.startAt = instance.getSettings().hungerLimit
+  bot.autoEat.options.bannedFood = instance.getSettings().hungerBannedFood
 
-bot.on("death", async () => {
-    instance.clearStates();
-    instance.clearEvents();
-});
+  // see https://www.npmjs.com/package/mineflayer-pathfinder#movements
+  bot.pathfinder.setMovements(new Movements(bot))
 
-bot.on("error", async (error) => {
-    console.error(error);
-});
-bot.on("kicked", async (reason) => {
-    instance.logger.info(reason);
-    process.exit(4);
-});
+  // disable building of 1x1 blocks when moving upwards
+  bot.pathfinder.movements.allow1by1towers = false
+
+  // disable jumping over distances further than 1 block when moving
+  bot.pathfinder.movements.allowParkour = false
+
+  // disable breaking of blocks when moving
+  bot.pathfinder.movements.canDig = false
+
+  instance.log.info(instance.locale.bot_greeting)
+})
+
+bot.on('death', async () => {
+  instance.clearStates()
+  instance.clearEvents()
+})
+
+bot.on('error', async (error: unknown) => {
+  console.error(error)
+})
+
+bot.on('kicked', async (reason: string) => {
+  instance.log.info(reason)
+  process.exit(4)
+})

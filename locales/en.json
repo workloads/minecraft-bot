@@ -1,0 +1,74 @@
+{
+  "api_command_sent": "[API] command sent",
+  "api_interface_start": "[API] interface started; running on %s",
+  "api_interface_fail": "[API] unable to start interface",
+  "api_message_received": "[API] message received",
+
+  "auth_fail": "[AUTH] unable to validate credentials",
+  "auth_success": "[AUTH] credentials validated",
+
+  "bot_command_fail": "[BOT:command] failed to execute command: `%s`",
+  "bot_command_fail_denylisted": "[BOT:command] failed to execute command; user deny-listed",
+  "bot_command_fail_notfound": "[BOT:command] failed to find command: `%s`",
+  "bot_command_fail_unauthorized": "[BOT:command] failed to execute command; user not authorized",
+  "bot_command_success": "[BOT:command] command executed: `%s`",
+
+  "bot_deposit_fail": "[BOT:deposit] failed to deposit",
+  "bot_deposit_start": "[BOT:deposit] depositing started",
+  "bot_deposit_success": "[BOT:deposit] depositing completed",
+
+  "bot_greeting": "[BOT] ready for tasking",
+
+  "bot_mine_fail_start": "[BOT:mine] failed to start mining",
+  "bot_mine_inprogress": "[BOT:mine] mining in progress",
+  "bot_mine_start": "[BOT:mine] mining started",
+  "bot_mine_stop": "[BOT:mine] stopped mining",
+
+  "bot_search_bed_fail": "[BOT:search:bed] found bed",
+  "bot_search_bed_success": "[BOT:search:bed] failed to find bed",
+
+  "bot_search_block_fail": "[BOT:search:block] failed to find more blocks of type `%s`; starting depositing",
+  "bot_search_block_success": "[BOT:search:block] found block of type `%s`",
+
+  "bot_search_chest_fail": "[BOT:search:chest] failed to find chest; not at expected location",
+  "bot_search_chest_success": "[BOT:search:chest] found chest",
+
+  "bot_search_player_fail": "[BOT:search:player] failed to find player; not within render distance",
+  "bot_search_player_success": "[BOT:search:player] found player `%s` ",
+
+  "bot_search_mob_fail": "[BOT:attack] unable to find `%s`",
+  "bot_search_mob_success": "[BOT:attack] found `%s`",
+
+  "bot_attack_success": "[BOT:attack] attacking `%s`.",
+  "bot_attack_fail": "[BOT:attack] unable to attack.",
+
+  "bot_sleep_fail": "[BOT:sleep] failed to sleep",
+  "bot_sleep_fail_day": "[BOT:sleep] failed to sleep; wrong time of day",
+  "bot_sleep_fail_monsters": "[BOT:sleep] failed to sleep; monsters nearby",
+  "bot_sleep_inprogress": "[BOT:sleep] sleeping in progress",
+  "bot_sleep_start": "[BOT:sleep] sleeping started",
+  "bot_sleep_success": "[BOT:sleep] sleeping completed",
+
+  "discord_embed_title": "Mineflayer-based Excavation Assistant",
+  "discord_embed_author_text": "Status",
+  "discord_embed_description_title": "Command received",
+  "discord_embed_description_self_label": "Bot:",
+  "discord_discord_embed_description_commander": "Commander:",
+  "discord_embed_description_command": "Command:",
+
+  "env_config_load_fail": "[ENVIRONMENT] unable to load configuration from environment",
+  "env_config_load_success": "[ENVIRONMENT] loaded configuration from environment",
+
+  "discord_channel_fail_notfound": "[DISCORD] failed to find channel identifier",
+  "discord_channel_fail_missingchannelid": "[DISCORD] unable to find channel identifier",
+  "discord_channel_success": "[DISCORD] found and cached channel",
+  "discord_token_fail": "[DISCORD] unable to validate token",
+  "discord_token_fail_notfound": "[DISCORD] unable to find token; integration disabled",
+  "discord_token_success": "[DISCORD] token found",
+
+  "inventoryviewer_interface_success": "[INV-VIEWER] viewer started",
+  "inventoryviewer_interface_fail": "[INV-VIEWER] failed to start viewer",
+
+  "plugins_fail": "[PLUGIN] failed to load plugins",
+  "plugins_success": "[PLUGIN] plugins loaded"
+}

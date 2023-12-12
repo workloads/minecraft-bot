@@ -1,225 +1,218 @@
-import mineflayer, { Bot } from "mineflayer";
-import { BotSettings, BotStates } from "src/utils/interfaces";
-import { ConfigManager } from "./env";
-import path from "path";
-import fs from "fs";
-import { FindBed, findDesiredBlock } from "../utils/findTools";
-import { goals } from "mineflayer-pathfinder";
-import { Vec3 } from "vec3";
-import { Mining } from "../utils/mining";
-import { configDotenv } from "dotenv";
-import { Channel, Client, GatewayIntentBits } from "discord.js";
-import pino from "pino";
-import pretty from "pino-pretty";
-import chalk from "chalk";
-configDotenv();
+import mineflayer, { Bot } from 'mineflayer'
 
-const env = process.env;
+import { Channel, Client, GatewayIntentBits, EmbedBuilder } from 'discord.js'
+import { BotSettings, BotStates, Strings } from '../interfaces'
+import { ConfigManager } from './env'
+import { configDotenv } from 'dotenv'
+import { Vec3 } from 'vec3'
 
-function inject(bot: mineflayer.Bot) {
-    const COMMANDS_DIRECTORY = path.join(__dirname, "modules");
-    const commands = fs
-        .readdirSync(COMMANDS_DIRECTORY)
-        .filter(x => x.endsWith(".js"))
-        .map(pluginName => require(path.join(COMMANDS_DIRECTORY, pluginName)));
+import pretty from 'pino-pretty'
+import { Api } from './api'
+import pino from 'pino'
 
-    bot.loadPlugins(commands);
-}
+import { command_handler } from './handler'
+configDotenv()
+
+const env = process.env
 
 class MineflayerBot {
-    private bot: Bot;
-    private settings: BotSettings;
-    private states: BotStates;
-    public logger;
-    private discord: Client;
-    public channel: Channel | undefined;
+  private bot: Bot
+  private discord: Client
 
-    private createSettings(): BotSettings {
-        return {
-            discordToken: env.DISCORD_TOKEN ? env.DISCORD_TOKEN : undefined,
-            discordChannel: env.DISCORD_CHANNEL_ID ? env.DISCORD_CHANNEL_ID : undefined,
-            inventoryPort: env.BOT_WEB_INVENTORY_PORT ? parseInt(env.BOT_WEB_INVENTORY_PORT) : undefined,
-            viewPort: env.BOT_WEB_VIEW_PORT ? parseInt(env.BOT_WEB_VIEW_PORT) : undefined,
-            interfacePort: env.BOT_WEB_INTERFACE_PORT ? parseInt(env.BOT_WEB_INTERFACE_PORT) : undefined,
+  private settings: BotSettings
+  private states: BotStates
 
-            hungerPriority: env.BOT_HUNGER_PRIORITY === "foodpoints" ? "foodPoints" : "saturation",
-            hungerLimit: env.BOT_HUNGER_THRESHOLD ? parseInt(env.BOT_HUNGER_THRESHOLD) : 10,
-            hungerBannedFood: env.BOT_HUNGER_BANNED_FOODS ? env.BOT_HUNGER_BANNED_FOODS.split(",") : [],
+  public log
+  public channel: Channel | undefined = undefined
+  public locale: Strings
+  public api: Api
 
-            miningEnabled: env.BOT_MINING_ENABLED === "true" ? true : false,
-            miningBlock: env.BOT_MINING_INITIAL_BLOCK ? env.BOT_MINING_INITIAL_BLOCK : undefined,
-            miningDistance: env.BOT_MINING_SEARCH_DISTANCE ? parseInt(env.BOT_MINING_SEARCH_DISTANCE) : 18,
-            miningChest: new Vec3(0, 0, 0),
+  private createSettings(): BotSettings {
+    return {
+      discordToken: env.DISCORD_TOKEN ? env.DISCORD_TOKEN : undefined,
+      discordChannel: env.DISCORD_CHANNEL_ID ? env.DISCORD_CHANNEL_ID : undefined,
+      discordEmbedColor: env.DISCORD_EMBED_COLOR ? env.DISCORD_EMBED_COLOR : '2f3136',
 
-            operators: env.BOT_CHAT_OPERATOR_ALLOWLIST ? env.BOT_CHAT_OPERATOR_ALLOWLIST : [],
-            commandsEnabled: env.BOT_CHAT_ALLOW_CHAT === "true" ? true : false,
-            commandsPrefix: env.BOT_CHAT_COMMAND_PREFIX ? env.BOT_CHAT_COMMAND_PREFIX : "#",
+      inventoryPort: env.BOT_WEB_INVENTORY_PORT ? parseInt(env.BOT_WEB_INVENTORY_PORT) : undefined,
+      viewPort: env.BOT_WEB_VIEW_PORT ? parseInt(env.BOT_WEB_VIEW_PORT) : undefined,
+      interfacePort: env.BOT_WEB_INTERFACE_PORT ? parseInt(env.BOT_WEB_INTERFACE_PORT) : undefined,
 
-            mappedBlocks: env.BOT_MAPPED_BLOCKS ? env.BOT_MAPPED_BLOCKS.split(",") : []
-        };
+      hungerPriority: env.BOT_HUNGER_PRIORITY === 'foodpoints' ? 'foodPoints' : 'saturation',
+      hungerLimit: env.BOT_HUNGER_THRESHOLD ? parseInt(env.BOT_HUNGER_THRESHOLD) : 10,
+      hungerBannedFood: env.BOT_HUNGER_BANNED_FOODS ? env.BOT_HUNGER_BANNED_FOODS.split(',') : [],
+
+      miningEnabled: env.BOT_MINING_ENABLED === 'true' ? true : false,
+      miningBlock: env.BOT_MINING_INITIAL_BLOCK ? env.BOT_MINING_INITIAL_BLOCK : undefined,
+      miningDistance: env.BOT_MINING_SEARCH_DISTANCE
+        ? parseInt(env.BOT_MINING_SEARCH_DISTANCE)
+        : 18,
+      miningChest: new Vec3(0, 0, 0),
+
+      operators: env.BOT_CHAT_OPERATOR_ALLOWLIST ? env.BOT_CHAT_OPERATOR_ALLOWLIST.split(',') : [],
+      commandsEnabled: env.BOT_CHAT_ALLOW_CHAT === 'true' ? true : false,
+      commandsPrefix: env.BOT_CHAT_COMMAND_PREFIX ? env.BOT_CHAT_COMMAND_PREFIX : '#',
+
+      mappedBlocks: env.BOT_MAPPED_BLOCKS ? env.BOT_MAPPED_BLOCKS.split(',') : [],
+      mappedLogs: env.BOT_MAPPED_LOGS ? env.BOT_MAPPED_LOGS.split(',') : [],
+    }
+  }
+
+  private createStates(): BotStates {
+    return {
+      isMining: false,
+      stopMining: false,
+      stopMurdering: false,
+      block: undefined,
+      entity: undefined,
+    }
+  }
+
+  public getBot(): Bot {
+    return this.bot
+  }
+  public getDiscordClient(): Client | undefined {
+    return this.discord
+  }
+
+  public getStates(): BotStates {
+    return this.states
+  }
+
+  public getSettings(): BotSettings {
+    return this.settings
+  }
+
+  public clearEvents() {
+    this.bot.removeAllListeners('goal_reached')
+    this.bot.removeAllListeners('diggingCompleted')
+    this.bot.removeAllListeners('playerCollect')
+    this.bot.removeAllListeners('entityDead')
+  }
+
+  constructor(strings: Strings) {
+    this.log = pino(
+      pretty({
+        colorize: true,
+        customPrettifiers: {
+          time: (timestamp) => `\x1b[34m${timestamp}\x1b[0m`,
+          pid: () => `\x1b[36m${process.env.BOT_NAME}\x1b[0m`,
+        },
+        levelFirst: true,
+      }),
+    )
+
+    // General Configuration.
+    this.discord = new Client({
+      intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessageTyping],
+    })
+
+    this.locale = strings
+    this.settings = this.createSettings()
+    this.states = this.createStates()
+
+    const chest_location = env.BOT_MINING_CHEST_LOCATION
+      ? env.BOT_MINING_CHEST_LOCATION.split(',')
+      : ['0', '0', '0']
+    this.settings.miningChest.set(
+      parseInt(chest_location[0]),
+      parseInt(chest_location[1]),
+      parseInt(chest_location[2]),
+    )
+
+    this.api = new Api(this)
+
+    // Minecraft Bot Initializer.
+    const credentials = new ConfigManager().readConfig(this)
+    if (!credentials) {
+      this.log.info(strings.auth_fail)
+      process.exit(4)
     }
 
-    private createStates(): BotStates {
-        return {
-            isMining: false,
-            stopMining: false,
-            block: undefined
-        };
+    this.bot = mineflayer.createBot({
+      username: credentials.username,
+      host: credentials.host,
+      port: credentials.port,
+      auth: credentials.auth,
+      password: credentials.password,
+      version: credentials.version,
+    })
+
+    this.bot.loadPlugin(command_handler)
+
+    // Discord Integration Initializer.
+    if (this.settings.discordToken === undefined) {
+      this.log.info(strings.discord_token_fail_notfound)
+      return
     }
 
-    public getBot(): Bot {
-        return this.bot;
+    this.discord.on('shardReady', () => {
+      this.log.info(strings.discord_token_success)
+
+      if (!this.settings.discordChannel) {
+        this.log.error(strings.discord_channel_fail_missingchannelid)
+        return
+      }
+
+      if (this.settings.discordChannel) {
+        this.channel = this.discord.channels.cache.get(this.settings.discordChannel)
+      } else {
+        this.log.info(strings.discord_channel_fail_missingchannelid)
+      }
+    })
+
+    this.discord.login(this.settings.discordToken).catch(() => {
+      this.log.error(strings.discord_token_fail)
+      return
+    })
+  }
+
+  public clearStates(): void {
+    this.settings = this.createSettings()
+    this.states = this.createStates()
+
+    const chest = env.BOT_MINING_CHEST_LOCATION
+      ? env.BOT_MINING_CHEST_LOCATION.split(',')
+      : ['0', '0', '0']
+
+    this.settings.miningChest.set(parseInt(chest[0]), parseInt(chest[1]), parseInt(chest[2]))
+  }
+
+  public async send_to_discord(
+    username: string,
+    command: string,
+    params: string | null = null,
+  ): Promise<void> {
+    if (!this.channel) return
+
+    if (!this.channel.isTextBased()) return // This will never happen.
+
+    const embed = new EmbedBuilder()
+      .setTitle(this.locale.discord_embed_title)
+      .setColor(`#${env.DISCORD_EMBED_COLOR}`)
+      .setThumbnail(`https://mc-heads.net/avatar/${username}`)
+      .setAuthor({
+        iconURL: `https://mc-heads.net/avatar/${this.bot.username}`,
+        name: this.locale.discord_embed_author_text,
+      })
+      .setTimestamp()
+
+    embed.setDescription(
+      `### ${this.locale.discord_embed_description_command}
+\`\`\`yml
+- ${this.locale.discord_embed_description_self_label} ${this.bot.username}
+
+- ${this.locale.discord_discord_embed_description_commander} ${username}
+
+- ${this.locale.discord_embed_description_command} ${command} ${params ? params : ''}
+\`\`\``,
+    )
+
+    try {
+      await this.channel.send({ embeds: [embed] })
+    } catch (error) {
+      this.locale.discord_channel_fail_notfound
     }
-    public getDiscordClient(): Client {
-        return this.discord;
-    }
-
-    public getStates(): BotStates {
-        return this.states;
-    }
-
-    public getSettings(): BotSettings {
-        return this.settings;
-    }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public async sendToDiscord(message: string): Promise<void> {
-        if (!this.channel) return;
-
-        if (!this.channel.isTextBased()) return; // This will never happen.
-
-        await this.channel.send(message);
-    }
-
-    constructor() {
-        this.channel = undefined;
-        this.logger = pino(pretty({
-            colorize: true,
-            customPrettifiers: {
-                time: timestamp => chalk.blueBright(`${timestamp}`),
-                pid: () => chalk.cyanBright(`${process.env.BOT_NAME}`)
-            },
-            levelFirst: true
-        }));
-
-        const credentials = new ConfigManager().readConfig(this);
-        if (!credentials) {
-            process.exit(4);
-        }
-        
-        this.bot = mineflayer.createBot({
-            username: credentials.username,
-            host: credentials.host,
-            port: credentials.port,
-            auth: credentials.auth,
-            password: credentials.password,
-            version: credentials.version
-        });
-
-        this.discord = new Client({intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessageTyping]});
-        this.discord.on("shardReady", () => {
-            this.logger.info("Discord Interface is up and listening to commands.");
-            if (!this.settings.discordChannel) {
-                this.logger.error("Please insert the discord channel in .env file.");
-                process.exit(0);
-            }
-
-            this.channel = this.discord.channels.cache.get(this.settings.discordChannel);
-            });
-
-        const chest = env.BOT_MINING_CHEST_LOCATION ? env.BOT_MINING_CHEST_LOCATION.split(",") : ["0", "0", "0"];
-
-        this.settings = this.createSettings();
-        this.states = this.createStates();
-
-        this.settings.miningChest.set(parseInt(chest[0]), parseInt(chest[1]), parseInt(chest[2]));
-
-        this.discord.login(this.settings.discordToken);
-
-        inject(this.bot);
-    }
-
-    public clearStates(): void {
-        this.settings = this.createSettings();
-        this.states = this.createStates();
-
-        const chest = env.BOT_MINING_CHEST_LOCATION ? env.BOT_MINING_CHEST_LOCATION.split(",") : ["0", "0", "0"];
-
-        this.settings.miningChest.set(parseInt(chest[0]), parseInt(chest[1]), parseInt(chest[2]));
-    }
-    public clearEvents() {
-        this.bot.removeAllListeners("goal_reached");
-        this.bot.removeAllListeners("diggingCompleted");
-        this.bot.removeAllListeners("playerCollect");
-    }
-
-    public async goMine(block: string | undefined): Promise<void> {
-        if (!block) return;
-
-        block = block.toLowerCase().replaceAll(" ", "_");
-
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
-        const mcData = require("minecraft-data")(this.bot.version);
-
-        if (this.states.isMining) {
-            this.logger.info("The bot is already mining.");
-            return;
-        }
-
-        if (this.getSettings().mappedBlocks.includes(block)) {
-            block = block + "_block";
-        }
-
-        if (!mcData.blocksByName[block]) {
-            this.logger.info(`Could not find the block ${block} on the registry.`);
-            return;
-        }
-
-        this.getStates().block = block.toLowerCase().replaceAll(" ", "_");
-
-        const desired = await findDesiredBlock(this);
-
-        if (!desired) {
-            this.logger.info("Could not find the block %s nearby", this.getStates().block);
-            return;
-        }
-
-        this.logger.info("Starting to mine: %s", desired.name.replaceAll("_", " "));
-
-        this.states.isMining = true;
-
-        await this.bot.tool.equipForBlock(desired);
-
-        Mining(this);
-    }
-
-    public goSleep(): void {
-        if (this.bot.time.isDay) {
-            this.logger.info("cannot sleep at day");
-            return;
-        }
-
-        const bed = FindBed(this);
-
-        if (!bed) {
-            this.logger.info("cannot find a bed");
-            return;
-        }
-
-        this.bot.pathfinder.setGoal(null);
-
-        const bed_goal = new goals.GoalGetToBlock(bed.position.x, bed.position.y, bed.position.z);
-
-        this.bot.pathfinder.setGoal(bed_goal);
-
-        this.bot.once("goal_reached", async () => {
-            this.bot.sleep(bed).catch((reason) => {
-
-                if (reason.message.includes("monsters nearby")) {
-                    this.logger.info("Monsters nearby!");
-                }
-            });
-        });
-    }
+  }
 }
 
-export { MineflayerBot };
+export { MineflayerBot }
